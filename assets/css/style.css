@@ -224,9 +224,14 @@ h3{font-size:1.22rem}
   background:var(--salvia-clara);
 }
 .card__ico svg{width:28px;height:28px;fill:var(--verde)}
+/* Os ícones vieram como desenho solto em PNG transparente, não como círculo
+   colorido cheio. Então o círculo é o `--salvia-clara` do próprio .card__ico e
+   o desenho entra dentro dele, a 74% — nada de `cover`, que estouraria o
+   desenho pra fora do recorte. Efeito colateral bem-vindo: a paleta da marca
+   segura os oito cards, em vez de oito cores fortes brigando entre si. */
 .card__ico::after{
   content:"";position:absolute;inset:0;border-radius:50%;
-  background-size:cover;background-position:center;background-repeat:no-repeat;
+  background-size:74%;background-position:center;background-repeat:no-repeat;
 }
 .card__ico--periodontia::after{background-image:url("../img/icones/periodontia.png")}
 .card__ico--implante::after{background-image:url("../img/icones/implantodontia.png")}
@@ -445,29 +450,45 @@ h3{font-size:1.22rem}
 .zap:hover{transform:scale(1.06)}
 .zap svg{width:29px;height:29px;fill:#fff}
 
-/* ====================== bastidores ======================
-   Substituiu a faixa de foto com texto por cima. Ali o véu precisava ser
-   escuro pro texto ter contraste, e no fim a foto sumia — que era o oposto do
-   que a seção existia pra fazer. Aqui o texto tem o espaço dele e a foto tem o
-   dela: sem véu nenhum, sem nada por cima.
+/* ====================== faixa de foto ======================
+   Uma foto só, com a citação por cima, colada na seção de harmonização.
 
-   As duas fotos são cortadas acima da paciente. Foto de paciente é dado de
-   saúde — ver regra 2 do CLAUDE.md. */
-.bastidores__fotos{
-  display:grid;gap:1.2rem;grid-template-columns:1fr;
-  margin-top:clamp(2rem,4vw,2.8rem);
+   O que faz a foto aparecer é o véu **não ser uma camada uniforme**: é um
+   degradê elíptico concentrado no centro, atrás do texto. Nas bordas ele quase
+   some, então a sala, a luz e o instrumental ficam visíveis; no miolo ele
+   segura o contraste do branco. Véu chapado escurecia a foto inteira só pra
+   proteger três linhas de texto — e era isso que apagava a imagem.
+
+   A foto é cortada acima da paciente. Foto de paciente é dado de saúde — ver
+   regra 2 do CLAUDE.md. */
+.faixa-foto{
+  position:relative;
+  display:grid;place-items:center;
+  min-height:clamp(300px,42vw,480px);
+  padding:clamp(3rem,7vw,4.5rem) 0;
+  background-image:
+    radial-gradient(ellipse 62% 78% at 50% 50%,
+      rgba(18,53,40,.72) 0%, rgba(18,53,40,.50) 48%,
+      rgba(18,53,40,.18) 78%, rgba(18,53,40,.04) 100%),
+    url("../img/sala-2.webp"),
+    linear-gradient(120deg,#1E5C46,#123528);
+  background-size:cover,cover,cover;
+  background-position:center,center 32%,center;
+  color:#fff;text-align:center;
 }
-@media (min-width:820px){.bastidores__fotos{grid-template-columns:1fr 1fr}}
-.bastidores__foto{
-  aspect-ratio:16/10;border-radius:var(--raio-g);
-  background-color:var(--areia);
-  background-size:cover;background-position:center;
-  box-shadow:var(--sombra);
+.faixa-foto p{
+  max-width:26ch;margin:0 auto;
+  font-family:Georgia,serif;font-size:clamp(1.4rem,3.4vw,2.15rem);
+  line-height:1.28;
+  /* Com o véu leve e concentrado, o contraste do texto passa a depender daqui.
+     Duas sombras: uma curta pra separar da textura, uma larga pra dar base. */
+  text-shadow:0 1px 4px rgba(0,0,0,.62), 0 4px 30px rgba(0,0,0,.55);
 }
-.bastidores__foto--1{background-image:url("../img/sala-1.webp")}
-.bastidores__foto--2{background-image:url("../img/sala-2.webp");background-position:center 30%}
-.bastidores__nota{
-  margin:1.1rem 0 0;font-size:.9rem;color:var(--texto-suave);text-align:center;
+.faixa-foto span{
+  display:block;margin-top:1.1rem;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#DCE6E1;text-shadow:0 1px 8px rgba(0,0,0,.7);
 }
 
 /* ====================== convicções (com a foto da dupla) ====================== */
