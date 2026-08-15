@@ -55,6 +55,10 @@ h1{font-size:clamp(2rem,5.4vw,3.6rem)}
 h2{font-size:clamp(1.6rem,4vw,2.6rem)}
 h3{font-size:1.22rem}
 
+/* O topo é sticky, então âncora sem folga entrega a seção com o título por
+   baixo da barra. Vale pra todo alvo de link interno. */
+[id]{scroll-margin-top:88px}
+
 .env{width:min(1140px,100% - 2.5rem);margin-inline:auto}
 .env--estreito{width:min(820px,100% - 2.5rem);margin-inline:auto}
 .secao{padding:clamp(3.5rem,8vw,6.5rem) 0}
@@ -360,8 +364,140 @@ h3{font-size:1.22rem}
 .zap:hover{transform:scale(1.06)}
 .zap svg{width:29px;height:29px;fill:#fff}
 
+/* ====================== faixa de foto ====================== */
+/* Banda larga com a foto de atendimento por baixo. O véu é forte de propósito:
+   além do contraste do texto, ele é o que garante que ninguém na foto seja
+   reconhecível. Foto de paciente é dado de saúde — ver regra 2 do CLAUDE.md. */
+.faixa-foto{
+  position:relative;
+  display:grid;place-items:center;
+  min-height:clamp(260px,38vw,420px);
+  padding:clamp(2.5rem,6vw,4rem) 0;
+  background-image:
+    linear-gradient(100deg,rgba(18,53,40,.90) 0%,rgba(18,53,40,.72) 55%,rgba(18,53,40,.86) 100%),
+    url("../img/atendimento.webp"),
+    linear-gradient(120deg,#1E5C46,#123528);
+  background-size:cover,cover,cover;
+  background-position:center,center 35%,center;
+  color:#fff;text-align:center;
+}
+.faixa-foto p{
+  max-width:26ch;margin:0 auto;
+  font-family:Georgia,serif;font-size:clamp(1.4rem,3.4vw,2.15rem);
+  line-height:1.28;text-shadow:0 2px 20px rgba(0,0,0,.4);
+}
+.faixa-foto span{
+  display:block;margin-top:1.1rem;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--salvia);text-shadow:none;
+}
+
+/* ====================== convicções (com a foto da dupla) ====================== */
+.convic{display:grid;gap:clamp(2rem,4.5vw,3.5rem);grid-template-columns:1fr}
+/* No desktop a coluna de texto é bem mais alta que uma foto quadrada, e o
+   quadrado deixava um vazio grande embaixo. Aqui a foto estica junto com a
+   linha do grid — daí o aspect-ratio cair fora acima de 940px. */
+@media (min-width:940px){
+  .convic{grid-template-columns:.85fr 1.15fr}
+  .convic__foto{aspect-ratio:auto;min-height:100%}
+}
+.convic__foto{
+  aspect-ratio:1/1;border-radius:var(--raio-g);
+  background-color:var(--areia);
+  background-image:url("../img/dupla.webp");
+  background-size:cover;background-position:center;
+  box-shadow:var(--sombra);
+}
+.convic__lista{display:grid;gap:1.4rem;margin-top:2rem}
+.convic__item{
+  padding-left:1.4rem;border-left:3px solid var(--salvia);
+}
+.convic__item .eixo__frase{font-size:clamp(1.2rem,2.4vw,1.5rem);margin-bottom:.7rem}
+.convic__item .eixo__corpo{margin-bottom:.8rem;font-size:.98rem}
+
+/* ====================== quiz de autoqualificação ====================== */
+/* Adaptado de templates/componentes/quiz-qualificacao.html.
+   A diferença que importa neste nicho: o quiz NÃO diagnostica e não pode
+   sugerir que diagnostica — consulta e diagnóstico a distância são vedados
+   pelo Código de Ética Odontológica. Ele lista queixas que a pessoa já sente
+   e conclui numa única coisa: vale marcar avaliação. */
+.qq{
+  --qq-fundo:var(--verde-esc);
+  --qq-card:#193F30;
+  --qq-borda:#2C5A47;
+  --qq-marcado:#1E5C46;
+  --qq-destaque:var(--salvia);
+  --qq-titulo:#ffffff;
+  --qq-texto:#C3D2CB;
+  --qq-cta-fundo:#ffffff;
+  --qq-cta-texto:var(--verde-esc);
+  --qq-radius:12px;
+  background:var(--qq-fundo);color:var(--qq-texto);
+  padding:clamp(3rem,7vw,5.5rem) 0;
+}
+.qq__grid{
+  width:min(1140px,100% - 2.5rem);margin-inline:auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,5vw,4rem);align-items:start;
+}
+@media (max-width:900px){.qq__grid{grid-template-columns:1fr}}
+.qq__olho{color:var(--qq-destaque);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;margin:0 0 .85rem}
+.qq__titulo{color:var(--qq-titulo);font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.18;margin:0 0 1.5rem}
+.qq__texto{line-height:1.7;margin:0 0 1.2rem;max-width:48ch}
+.qq__texto--nota{font-size:.9rem;margin-bottom:0}
+.qq__texto strong{color:var(--qq-titulo)}
+.qq__linha{border:0;border-top:1px solid var(--qq-borda);margin:2rem 0 1.4rem}
+
+.qq__card{background:var(--qq-card);border:1px solid var(--qq-borda);border-radius:var(--qq-radius);padding:clamp(1.4rem,3vw,2.1rem)}
+.qq__card-titulo{color:var(--qq-titulo);font-size:1.15rem;margin:0 0 .35rem}
+.qq__card-sub{font-size:.86rem;margin:0 0 1.4rem;opacity:.82}
+
+.qq__opcoes{border:0;margin:0;padding:0;display:grid;gap:.6rem}
+.qq__sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.qq__opcao{
+  display:grid;grid-template-columns:auto 1fr;gap:.85rem;align-items:start;
+  padding:.85rem 1rem;border:1px solid var(--qq-borda);border-radius:var(--qq-radius);
+  cursor:pointer;transition:background .15s,border-color .15s;
+}
+.qq__opcao:hover{border-color:var(--qq-destaque)}
+.qq__opcao input{position:absolute;opacity:0;width:0;height:0}
+.qq__marca{
+  width:20px;height:20px;border:1px solid var(--qq-borda);border-radius:5px;
+  display:grid;place-items:center;margin-top:1px;flex-shrink:0;
+}
+.qq__marca::after{
+  content:"";width:10px;height:6px;
+  border-left:2px solid var(--qq-cta-texto);border-bottom:2px solid var(--qq-cta-texto);
+  transform:rotate(-45deg) translate(1px,-1px) scale(0);transition:transform .15s;
+}
+.qq__opcao:has(input:checked){background:var(--qq-marcado);border-color:var(--qq-destaque)}
+.qq__opcao:has(input:checked) .qq__marca{background:var(--qq-cta-fundo);border-color:var(--qq-cta-fundo)}
+.qq__opcao:has(input:checked) .qq__marca::after{transform:rotate(-45deg) translate(1px,-1px) scale(1)}
+.qq__opcao:has(input:focus-visible){outline:2px solid var(--qq-destaque);outline-offset:2px}
+.qq__label{line-height:1.45;font-size:.94rem}
+.qq__opcao:has(input:checked) .qq__label{color:var(--qq-titulo)}
+
+.qq__resultado{margin-top:1.2rem;padding:1.2rem;background:var(--qq-marcado);border:1px solid var(--qq-destaque);border-radius:var(--qq-radius)}
+.qq__resultado[hidden]{display:none}
+.qq__resultado-texto{margin:0 0 1.1rem;line-height:1.6;font-size:.93rem}
+.qq__resultado-texto strong{color:var(--qq-titulo)}
+.qq__cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--qq-cta-fundo);color:var(--qq-cta-texto);
+  padding:.8rem 1.4rem;border-radius:999px;text-decoration:none;
+  font-weight:600;font-size:.95rem;transition:opacity .15s;
+}
+.qq__cta:hover{opacity:.9}
+.qq__cta svg{width:18px;height:18px;fill:currentColor;flex:none}
+.qq__aviso{margin:1rem 0 0;font-size:.8rem;line-height:1.5;opacity:.72}
+@media (prefers-reduced-motion:reduce){
+  .qq__opcao,.qq__marca::after,.qq__cta{transition:none}
+}
+
 /* ====================== respiro final ====================== */
 @media (max-width:420px){
   body{font-size:16px}
   .env,.env--estreito{width:min(100% - 2rem,100%)}
+  .qq__grid{width:min(100% - 2rem,100%)}
 }

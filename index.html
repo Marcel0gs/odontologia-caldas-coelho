@@ -130,11 +130,19 @@
 <header class="topo">
   <div class="env topo__env">
     <a class="marca" href="#topo" aria-label="Odontologia Paulo Coelho e Mariana Caldas">
-      <svg class="marca__sinal" viewBox="0 0 60 76" aria-hidden="true">
+      <svg class="marca__sinal" viewBox="0 0 64 80" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg-a" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#2E5C41"/><stop offset=".55" stop-color="#6F8B77"/><stop offset="1" stop-color="#D6C0B0"/>
+          </linearGradient>
+          <linearGradient id="lg-b" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#D6C0B0"/><stop offset=".5" stop-color="#A8A597"/><stop offset="1" stop-color="#3B6B4E"/>
+          </linearGradient>
+        </defs>
         <path d="M30 6C16 6 12 18 12 25s6 13 18 13 18 6 18 13-4 19-18 19S12 58 12 51s6-13 18-13 18-6 18-13S44 6 30 6Z"
-              fill="none" stroke="#8FAF9F" stroke-width="5" transform="translate(4,2)"/>
+              fill="none" stroke="url(#lg-b)" stroke-width="4" transform="translate(6,3)"/>
         <path d="M30 6C16 6 12 18 12 25s6 13 18 13 18 6 18 13-4 19-18 19S12 58 12 51s6-13 18-13 18-6 18-13S44 6 30 6Z"
-              fill="none" stroke="#1E5C46" stroke-width="5"/>
+              fill="none" stroke="url(#lg-a)" stroke-width="4"/>
       </svg>
       <span class="marca__txt">
         <span class="marca__nome"><span>Paulo Coelho</span><i class="marca__pt">·</i><span>Mariana Caldas</span></span>
@@ -145,6 +153,7 @@
       <a href="#especialidades">Especialidades</a>
       <a href="#equipe">Equipe</a>
       <a href="#clinica">O consultório</a>
+      <a href="#quiz">Isso é pra mim?</a>
       <a href="#local">Onde fica</a>
     </nav>
     <a class="btn" href="https://wa.me/553138340002?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o." target="_blank" rel="noopener">
@@ -202,48 +211,8 @@
   </div>
 </section>
 
-<!-- ===== os dois eixos ===== -->
-<section class="secao">
-  <div class="env">
-    <div class="cabeca">
-      <span class="olho">Como aqui se pensa</span>
-      <h2>Duas convicções que guiam o consultório</h2>
-      <p class="chamada">
-        Não são slogans. São as duas ideias que decidem o que se propõe a cada
-        paciente que senta na cadeira.
-      </p>
-    </div>
-
-    <div class="eixos">
-      <article class="eixo eixo--salvia">
-        <p class="eixo__frase">“Extração dos dentes acometidos pela perda óssea não é a única maneira de tratar.”</p>
-        <p class="eixo__corpo">
-          A doença periodontal destrói o osso que segura o dente — em silêncio, e
-          quase sempre sem dor até tarde demais. Quando ela é identificada e
-          tratada, muito dente que já foi condenado pode continuar na boca. É por
-          isso que a primeira pergunta aqui nunca é qual dente sai, e sim quanto
-          ainda dá pra manter.
-        </p>
-        <span class="eixo__quem">Dra. Mariana Caldas · Periodontia</span>
-      </article>
-
-      <article class="eixo">
-        <p class="eixo__frase">“Muito além de alinhar dentes: a ortopedia funcional atua na causa.”</p>
-        <p class="eixo__corpo">
-          Aparelhos removíveis e estímulos funcionais guiam o crescimento ósseo,
-          corrigem desequilíbrios musculares e trabalham a harmonia entre dentes,
-          ossos e funções como mastigação, respiração e fala. Quanto mais cedo a
-          alteração aparece, mais o crescimento pode ser conduzido — por isso a
-          infância é a melhor fase para começar.
-        </p>
-        <span class="eixo__quem">Dr. Paulo Coelho · Ortopedia funcional dos maxilares</span>
-      </article>
-    </div>
-  </div>
-</section>
-
 <!-- ===== especialidades ===== -->
-<section class="secao secao--creme" id="especialidades">
+<section class="secao" id="especialidades">
   <div class="env">
     <div class="cabeca">
       <span class="olho">Especialidades</span>
@@ -300,6 +269,14 @@
   </div>
 </section>
 
+<!-- ===== faixa de foto ===== -->
+<section class="faixa-foto">
+  <div class="env">
+    <p>“Nosso diferencial é o trabalho em conjunto, do planejamento até a execução.”</p>
+    <span>Odontologia Paulo Coelho · Mariana Caldas</span>
+  </div>
+</section>
+
 <!-- ===== harmonização orofacial ===== -->
 <section class="secao secao--verde" id="harmonizacao">
   <div class="env harm">
@@ -338,7 +315,7 @@
 </section>
 
 <!-- ===== equipe ===== -->
-<section class="secao" id="equipe">
+<section class="secao secao--creme" id="equipe">
   <div class="env">
     <div class="cabeca">
       <span class="olho">Quem atende</span>
@@ -394,7 +371,7 @@
 </section>
 
 <!-- ===== o consultório ===== -->
-<section class="secao secao--creme" id="clinica">
+<section class="secao" id="clinica">
   <div class="env clinica">
     <div class="clinica__foto" role="img" aria-label="Fachada do consultório na Rua Amapá, 59"></div>
     <div>
@@ -418,6 +395,140 @@
         Marcar horário
       </a>
     </div>
+  </div>
+</section>
+
+<!-- ===== como aqui se pensa (os dois eixos) ===== -->
+<section class="secao secao--creme" id="convicoes">
+  <div class="env convic">
+    <div class="convic__foto" role="img" aria-label="Dra. Mariana Caldas e Dr. Paulo Coelho"></div>
+    <div>
+      <span class="olho">Como aqui se pensa</span>
+      <h2>Duas convicções que guiam o consultório</h2>
+      <p class="chamada">
+        Não são slogans. São as duas ideias que decidem o que se propõe a cada
+        paciente que senta na cadeira — e foram eles que as escreveram.
+      </p>
+
+      <div class="convic__lista">
+        <article class="convic__item">
+          <p class="eixo__frase">“Extração dos dentes acometidos pela perda óssea não é a única maneira de tratar.”</p>
+          <p class="eixo__corpo">
+            A doença periodontal destrói o osso que segura o dente — em silêncio, e
+            quase sempre sem dor até tarde demais. Quando ela é identificada e
+            tratada, muito dente que já foi condenado pode continuar na boca. É por
+            isso que a primeira pergunta aqui nunca é qual dente sai, e sim quanto
+            ainda dá pra manter.
+          </p>
+          <span class="eixo__quem">Dra. Mariana Caldas · Periodontia</span>
+        </article>
+
+        <article class="convic__item">
+          <p class="eixo__frase">“Muito além de alinhar dentes: a ortopedia funcional atua na causa.”</p>
+          <p class="eixo__corpo">
+            Aparelhos removíveis e estímulos funcionais guiam o crescimento ósseo,
+            corrigem desequilíbrios musculares e trabalham a harmonia entre dentes,
+            ossos e funções como mastigação, respiração e fala. Quanto mais cedo a
+            alteração aparece, mais o crescimento pode ser conduzido — por isso a
+            infância é a melhor fase para começar.
+          </p>
+          <span class="eixo__quem">Dr. Paulo Coelho · Ortopedia funcional dos maxilares</span>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== quiz de autoqualificação ===== -->
+<section class="qq" id="quiz" aria-labelledby="qq-titulo">
+  <div class="qq__grid">
+
+    <div class="qq__intro">
+      <p class="qq__olho">— Isso é pra mim? —</p>
+      <h2 class="qq__titulo" id="qq-titulo">Alguma dessas coisas está acontecendo com você?</h2>
+      <p class="qq__texto">
+        Quase ninguém marca dentista por causa de um diagnóstico. Marca porque
+        alguma coisa está incomodando há um tempo e não passa sozinha.
+      </p>
+      <p class="qq__texto">
+        Marque o que reconhecer. Se aparecerem duas ou mais, é sinal de que vale
+        sentar na cadeira e olhar direito.
+      </p>
+      <hr class="qq__linha">
+      <p class="qq__texto qq__texto--nota">
+        <strong>Nada aqui é diagnóstico.</strong> Só o exame clínico e a
+        radiografia dizem o que está acontecendo de verdade. Isto é só um jeito
+        de organizar o que você já está sentindo antes de conversar.
+      </p>
+    </div>
+
+    <div class="qq__card">
+      <h3 class="qq__card-titulo">O que te trouxe até aqui?</h3>
+      <p class="qq__card-sub">Marque o que se aplica — sem compromisso.</p>
+
+      <fieldset class="qq__opcoes" data-quiz data-telefone="553138340002" data-minimo="2">
+        <legend class="qq__sr">Situações que se aplicam a você</legend>
+
+        <label class="qq__opcao">
+          <input type="checkbox" value="Minha gengiva sangra quando eu escovo ou uso fio dental">
+          <span class="qq__marca" aria-hidden="true"></span>
+          <span class="qq__label">Minha gengiva sangra quando eu escovo ou uso fio dental</span>
+        </label>
+
+        <label class="qq__opcao">
+          <input type="checkbox" value="Já me disseram que eu vou precisar extrair algum dente">
+          <span class="qq__marca" aria-hidden="true"></span>
+          <span class="qq__label">Já me disseram que eu vou precisar extrair algum dente</span>
+        </label>
+
+        <label class="qq__opcao">
+          <input type="checkbox" value="Sinto algum dente mole, ou acho que a gengiva retraiu">
+          <span class="qq__marca" aria-hidden="true"></span>
+          <span class="qq__label">Sinto algum dente mole, ou acho que a gengiva retraiu</span>
+        </label>
+
+        <label class="qq__opcao">
+          <input type="checkbox" value="Já perdi um ou mais dentes e queria repor">
+          <span class="qq__marca" aria-hidden="true"></span>
+          <span class="qq__label">Já perdi um ou mais dentes e queria repor</span>
+        </label>
+
+        <label class="qq__opcao">
+          <input type="checkbox" value="Meu filho respira pela boca, tem a mordida torta ou dificuldade de mastigar">
+          <span class="qq__marca" aria-hidden="true"></span>
+          <span class="qq__label">Meu filho respira pela boca, tem a mordida torta ou dificuldade de mastigar</span>
+        </label>
+
+        <label class="qq__opcao">
+          <input type="checkbox" value="Aperto ou rango os dentes, principalmente à noite">
+          <span class="qq__marca" aria-hidden="true"></span>
+          <span class="qq__label">Aperto ou rango os dentes, principalmente à noite</span>
+        </label>
+
+        <label class="qq__opcao">
+          <input type="checkbox" value="Faz mais de um ano que eu não vou ao dentista">
+          <span class="qq__marca" aria-hidden="true"></span>
+          <span class="qq__label">Faz mais de um ano que eu não vou ao dentista</span>
+        </label>
+      </fieldset>
+
+      <div class="qq__resultado" data-resultado hidden>
+        <p class="qq__resultado-texto">
+          Você marcou <strong data-contagem>0</strong> <span data-plural>situações</span>.
+          Nenhuma delas fecha diagnóstico — isso só o exame clínico faz. Mas
+          qualquer uma já é motivo suficiente para marcar uma avaliação.
+        </p>
+        <a class="qq__cta" data-cta href="#" target="_blank" rel="noopener">
+          <svg aria-hidden="true"><use href="#i-zap"/></svg>
+          Marcar minha avaliação
+        </a>
+        <p class="qq__aviso">
+          Ao tocar no botão, o WhatsApp abre com o que você marcou já escrito.
+          Você lê antes de enviar.
+        </p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -571,6 +682,44 @@
 <a class="zap" href="https://wa.me/553138340002?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
   <svg aria-hidden="true"><use href="#i-zap"/></svg>
 </a>
+
+<script>
+(function () {
+  document.querySelectorAll('[data-quiz]').forEach(function (quiz) {
+    var telefone  = quiz.dataset.telefone;
+    var minimo    = parseInt(quiz.dataset.minimo, 10) || 2;
+    var card      = quiz.closest('.qq__card');
+    var resultado = card.querySelector('[data-resultado]');
+    var contagem  = card.querySelector('[data-contagem]');
+    var plural    = card.querySelector('[data-plural]');
+    var cta       = card.querySelector('[data-cta]');
+
+    function atualizar() {
+      var marcadas = Array.prototype.slice
+        .call(quiz.querySelectorAll('input:checked'))
+        .map(function (i) { return i.value; });
+
+      if (marcadas.length < minimo) {
+        resultado.hidden = true;
+        return;
+      }
+
+      contagem.textContent = marcadas.length;
+      plural.textContent = marcadas.length === 1 ? 'situação' : 'situações';
+
+      // A jogada: o WhatsApp já chega qualificado, com a queixa escrita.
+      var texto = 'Olá! Vim pelo site e marquei estas situações:\n\n'
+        + marcadas.map(function (m) { return '• ' + m; }).join('\n')
+        + '\n\nGostaria de marcar uma avaliação.';
+
+      cta.href = 'https://wa.me/' + telefone + '?text=' + encodeURIComponent(texto);
+      resultado.hidden = false;
+    }
+
+    quiz.addEventListener('change', atualizar);
+  })
+})();
+</script>
 
 </body>
 </html>
