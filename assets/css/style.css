@@ -239,7 +239,13 @@ h3{font-size:1.22rem}
 .selo b{color:#fff}
 
 /* ====================== equipe ====================== */
-.equipe{display:grid;gap:1.4rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+/* São dois profissionais. Sem o max-width, dois cards em `auto-fit` esticam
+   até a largura toda e a foto 4:5 vira um retrato de meio metro. */
+.equipe{
+  display:grid;gap:1.4rem;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  max-width:760px;
+}
 .pessoa{
   border-radius:var(--raio-g);overflow:hidden;
   background:var(--papel);border:1px solid var(--borda);
@@ -273,7 +279,6 @@ h3{font-size:1.22rem}
    Aqui o caminho é relativo ao próprio style.css e não tem ambiguidade. */
 .pessoa__foto--mariana::after{background-image:url("../img/dra-mariana.webp")}
 .pessoa__foto--paulo::after{background-image:url("../img/dr-paulo.webp")}
-.pessoa__foto--fe::after{background-image:url("../img/dra-fe.webp")}
 .pessoa__corpo{padding:1.5rem 1.5rem 1.7rem}
 .pessoa h3{color:var(--verde-esc);margin-bottom:.15rem}
 .pessoa__cro{
@@ -303,6 +308,31 @@ h3{font-size:1.22rem}
 .comodidades{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:1.6rem}
 .comod{display:flex;gap:.65rem;align-items:flex-start;font-size:.93rem;color:var(--texto-suave)}
 .comod svg{width:18px;height:18px;flex:none;margin-top:.24rem;fill:var(--verde-claro)}
+
+/* ====================== avaliações do google ====================== */
+.notaz{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.9rem 1.6rem;
+  margin-bottom:clamp(2rem,4vw,2.6rem);
+}
+.notaz__num{
+  font-family:Georgia,serif;font-size:3.2rem;line-height:1;color:var(--verde-esc);
+}
+.notaz__estrelas{display:flex;gap:.15rem}
+.notaz__estrelas svg{width:20px;height:20px;fill:#E8A33D}
+.notaz__txt{font-size:.92rem;color:var(--texto-suave)}
+.notaz__txt b{display:block;color:var(--texto);font-weight:600}
+
+.avals{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.aval{
+  padding:1.5rem 1.5rem 1.3rem;border-radius:var(--raio);
+  background:var(--papel);border:1px solid var(--borda);
+  display:flex;flex-direction:column;
+}
+.aval__estrelas{display:flex;gap:.1rem;margin-bottom:.85rem}
+.aval__estrelas svg{width:15px;height:15px;fill:#E8A33D}
+.aval p{font-size:.96rem;line-height:1.6;color:var(--texto);margin:0 0 1.1rem}
+.aval footer{margin-top:auto;font-size:.84rem;color:var(--texto-suave)}
+.aval footer b{display:block;color:var(--verde-esc);font-weight:600;font-size:.9rem}
 
 /* ====================== faq ====================== */
 .faq{display:grid;gap:.7rem}
@@ -385,39 +415,29 @@ h3{font-size:1.22rem}
 .zap:hover{transform:scale(1.06)}
 .zap svg{width:29px;height:29px;fill:#fff}
 
-/* ====================== faixa de foto ====================== */
-/* Banda larga com a foto de atendimento por baixo.
-   O véu foi calibrado pra deixar a cena visível — dá pra ver que é atendimento
-   de verdade. Ele podia ser leve porque **a foto já foi cortada acima da
-   paciente**: não há ninguém a proteger no quadro. Se um dia a imagem for
-   trocada por uma com paciente, escurecer não resolve — o corte é que resolve.
-   Ver regra 2 do CLAUDE.md. */
-.faixa-foto{
-  position:relative;
-  display:grid;place-items:center;
-  min-height:clamp(260px,38vw,420px);
-  padding:clamp(2.5rem,6vw,4rem) 0;
-  background-image:
-    linear-gradient(100deg,rgba(18,53,40,.66) 0%,rgba(18,53,40,.30) 55%,rgba(18,53,40,.60) 100%),
-    url("../img/atendimento.webp"),
-    linear-gradient(120deg,#1E5C46,#123528);
-  background-size:cover,cover,cover;
-  background-position:center,center 35%,center;
-  color:#fff;text-align:center;
+/* ====================== bastidores ======================
+   Substituiu a faixa de foto com texto por cima. Ali o véu precisava ser
+   escuro pro texto ter contraste, e no fim a foto sumia — que era o oposto do
+   que a seção existia pra fazer. Aqui o texto tem o espaço dele e a foto tem o
+   dela: sem véu nenhum, sem nada por cima.
+
+   As duas fotos são cortadas acima da paciente. Foto de paciente é dado de
+   saúde — ver regra 2 do CLAUDE.md. */
+.bastidores__fotos{
+  display:grid;gap:1.2rem;grid-template-columns:1fr;
+  margin-top:clamp(2rem,4vw,2.8rem);
 }
-.faixa-foto p{
-  max-width:26ch;margin:0 auto;
-  font-family:Georgia,serif;font-size:clamp(1.4rem,3.4vw,2.15rem);
-  line-height:1.28;
-  /* Sombra mais densa do que parece necessário: o véu foi clareado pra deixar
-     a cena aparecer, então o contraste do texto passou a depender daqui. */
-  text-shadow:0 2px 6px rgba(0,0,0,.55), 0 4px 26px rgba(0,0,0,.5);
+@media (min-width:820px){.bastidores__fotos{grid-template-columns:1fr 1fr}}
+.bastidores__foto{
+  aspect-ratio:16/10;border-radius:var(--raio-g);
+  background-color:var(--areia);
+  background-size:cover;background-position:center;
+  box-shadow:var(--sombra);
 }
-.faixa-foto span{
-  display:block;margin-top:1.1rem;
-  font-family:"Segoe UI",system-ui,sans-serif;
-  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--salvia);text-shadow:none;
+.bastidores__foto--1{background-image:url("../img/sala-1.webp")}
+.bastidores__foto--2{background-image:url("../img/sala-2.webp");background-position:center 30%}
+.bastidores__nota{
+  margin:1.1rem 0 0;font-size:.9rem;color:var(--texto-suave);text-align:center;
 }
 
 /* ====================== convicções (com a foto da dupla) ====================== */
