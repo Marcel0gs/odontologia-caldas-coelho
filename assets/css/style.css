@@ -257,9 +257,18 @@ h3{font-size:1.22rem}
 .pessoa__foto::before{content:attr(data-iniciais)}
 .pessoa__foto::after{
   content:"";position:absolute;inset:0;
-  background-image:var(--foto);
   background-size:cover;background-position:center top;
 }
+/* O caminho da foto mora AQUI, não numa variável passada pelo HTML.
+   Tentativa anterior: `style="--foto:url('assets/img/x.webp')"` no elemento e
+   `background-image:var(--foto)` no ::after. Não funciona: o Chrome resolve o
+   url() de dentro de uma custom property contra o arquivo .css onde o var() é
+   consumido, não contra o HTML onde foi declarado. Virava
+   `site/assets/css/assets/img/x.webp` — 404 silencioso, card ficava no bege.
+   Aqui o caminho é relativo ao próprio style.css e não tem ambiguidade. */
+.pessoa__foto--mariana::after{background-image:url("../img/dra-mariana.webp")}
+.pessoa__foto--paulo::after{background-image:url("../img/dr-paulo.webp")}
+.pessoa__foto--fe::after{background-image:url("../img/dra-fe.webp")}
 .pessoa__corpo{padding:1.5rem 1.5rem 1.7rem}
 .pessoa h3{color:var(--verde-esc);margin-bottom:.15rem}
 .pessoa__cro{
@@ -365,16 +374,19 @@ h3{font-size:1.22rem}
 .zap svg{width:29px;height:29px;fill:#fff}
 
 /* ====================== faixa de foto ====================== */
-/* Banda larga com a foto de atendimento por baixo. O véu é forte de propósito:
-   além do contraste do texto, ele é o que garante que ninguém na foto seja
-   reconhecível. Foto de paciente é dado de saúde — ver regra 2 do CLAUDE.md. */
+/* Banda larga com a foto de atendimento por baixo.
+   O véu foi calibrado pra deixar a cena visível — dá pra ver que é atendimento
+   de verdade. Ele podia ser leve porque **a foto já foi cortada acima da
+   paciente**: não há ninguém a proteger no quadro. Se um dia a imagem for
+   trocada por uma com paciente, escurecer não resolve — o corte é que resolve.
+   Ver regra 2 do CLAUDE.md. */
 .faixa-foto{
   position:relative;
   display:grid;place-items:center;
   min-height:clamp(260px,38vw,420px);
   padding:clamp(2.5rem,6vw,4rem) 0;
   background-image:
-    linear-gradient(100deg,rgba(18,53,40,.90) 0%,rgba(18,53,40,.72) 55%,rgba(18,53,40,.86) 100%),
+    linear-gradient(100deg,rgba(18,53,40,.82) 0%,rgba(18,53,40,.52) 55%,rgba(18,53,40,.78) 100%),
     url("../img/atendimento.webp"),
     linear-gradient(120deg,#1E5C46,#123528);
   background-size:cover,cover,cover;
@@ -395,19 +407,26 @@ h3{font-size:1.22rem}
 
 /* ====================== convicções (com a foto da dupla) ====================== */
 .convic{display:grid;gap:clamp(2rem,4.5vw,3.5rem);grid-template-columns:1fr}
-/* No desktop a coluna de texto é bem mais alta que uma foto quadrada, e o
-   quadrado deixava um vazio grande embaixo. Aqui a foto estica junto com a
-   linha do grid — daí o aspect-ratio cair fora acima de 940px. */
-@media (min-width:940px){
-  .convic{grid-template-columns:.85fr 1.15fr}
-  .convic__foto{aspect-ratio:auto;min-height:100%}
-}
 .convic__foto{
   aspect-ratio:1/1;border-radius:var(--raio-g);
   background-color:var(--areia);
   background-image:url("../img/dupla.webp");
   background-size:cover;background-position:center;
   box-shadow:var(--sombra);
+}
+/* No desktop a coluna de texto é bem mais alta que uma foto quadrada. O
+   `aspect-ratio` sai e o item, sem altura própria, estica pela linha do grid
+   (align-items é stretch por padrão).
+   Duas armadilhas que já custaram um conserto cada:
+   1. Este bloco tem que vir DEPOIS da regra base. Mesma especificidade, quem
+      vem por último ganha — com o @media antes, o aspect-ratio:1/1 voltava e
+      a foto continuava quadrada no desktop.
+   2. Não usar `min-height:100%` aqui: a linha é dimensionada pelo conteúdo, a
+      porcentagem não tem contra o que resolver, e a foto vazava por cima da
+      seção seguinte. */
+@media (min-width:940px){
+  .convic{grid-template-columns:.85fr 1.15fr}
+  .convic__foto{aspect-ratio:auto}
 }
 .convic__lista{display:grid;gap:1.4rem;margin-top:2rem}
 .convic__item{
