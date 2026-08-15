@@ -138,7 +138,7 @@ h3{font-size:1.22rem}
   /* A foto entra por cima; o degradê embaixo é o que segura o visual se a
      imagem faltar ou ainda não estiver convertida. Nunca fica quebrado. */
   background-image:
-    linear-gradient(180deg,rgba(18,53,40,.30) 0%,rgba(18,53,40,.62) 55%,rgba(18,53,40,.88) 100%),
+    linear-gradient(180deg,rgba(18,53,40,.20) 0%,rgba(18,53,40,.50) 55%,rgba(18,53,40,.82) 100%),
     url("../img/fachada.webp"),
     linear-gradient(160deg,#2F7A5D 0%,#1E5C46 45%,#123528 100%);
   background-size:cover,cover,cover;
@@ -148,7 +148,7 @@ h3{font-size:1.22rem}
 @media (max-width:700px){
   .hero{
     background-image:
-      linear-gradient(180deg,rgba(18,53,40,.34) 0%,rgba(18,53,40,.66) 50%,rgba(18,53,40,.92) 100%),
+      linear-gradient(180deg,rgba(18,53,40,.24) 0%,rgba(18,53,40,.56) 50%,rgba(18,53,40,.88) 100%),
       url("../img/fachada-mobile.webp"),
       linear-gradient(160deg,#2F7A5D 0%,#1E5C46 45%,#123528 100%);
   }
@@ -167,14 +167,19 @@ h3{font-size:1.22rem}
 }
 
 /* ====================== faixa de credenciais ====================== */
-.credenciais{background:var(--verde-esc);color:#DCE6E1;padding:1.6rem 0}
+/* Faixa fina de propósito: é uma linha de credenciais, não uma seção. Quando
+   cada item ocupava três linhas de texto ela virava um bloco alto e roubava o
+   peso do hero logo acima. Agora o nome da credencial fica em negrito e o
+   detalhe vem na mesma linha, separado por um ponto. */
+.credenciais{background:var(--verde-esc);color:#B9CBC3;padding:.95rem 0}
 .credenciais__grade{
-  display:grid;gap:1rem 2rem;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  display:grid;gap:.55rem 1.8rem;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 }
-.cred{display:flex;gap:.75rem;align-items:flex-start;font-size:.93rem;line-height:1.45}
-.cred__ico{width:20px;height:20px;flex:none;margin-top:.18rem;fill:var(--salvia)}
-.cred b{display:block;color:#fff;font-weight:600}
+.cred{display:flex;gap:.6rem;align-items:baseline;font-size:.85rem;line-height:1.4}
+.cred__ico{width:15px;height:15px;flex:none;align-self:center;fill:var(--salvia)}
+.cred b{color:#fff;font-weight:600}
+.cred i{font-style:normal;color:var(--salvia);margin:0 .35em}
 
 /* ====================== convicções (os dois eixos) ====================== */
 .eixos{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
@@ -334,6 +339,13 @@ h3{font-size:1.22rem}
 .info-linha a{color:#D3DED9;text-decoration:none;border-bottom:1px solid rgba(211,222,217,.3)}
 .info-linha a:hover{color:#fff}
 .info-linha span{color:#C3D2CB}
+.horarios{display:grid;gap:.35rem;margin:.35rem 0 .6rem}
+.horarios > span{display:flex;flex-wrap:wrap;gap:.15rem .7rem;font-size:.94rem}
+.horarios em{
+  font-style:normal;min-width:9.5rem;
+  color:var(--salvia);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  align-self:center;
+}
 /* No fundo escuro desta seção o .btn--claro é branco sólido; a regra genérica
    `.secao--verde a{color:...}` não existe de propósito, pra não roubar a cor
    do botão por especificidade. Se um dia entrar, este seletor precisa vir junto. */
@@ -386,7 +398,7 @@ h3{font-size:1.22rem}
   min-height:clamp(260px,38vw,420px);
   padding:clamp(2.5rem,6vw,4rem) 0;
   background-image:
-    linear-gradient(100deg,rgba(18,53,40,.82) 0%,rgba(18,53,40,.52) 55%,rgba(18,53,40,.78) 100%),
+    linear-gradient(100deg,rgba(18,53,40,.66) 0%,rgba(18,53,40,.30) 55%,rgba(18,53,40,.60) 100%),
     url("../img/atendimento.webp"),
     linear-gradient(120deg,#1E5C46,#123528);
   background-size:cover,cover,cover;
@@ -396,7 +408,10 @@ h3{font-size:1.22rem}
 .faixa-foto p{
   max-width:26ch;margin:0 auto;
   font-family:Georgia,serif;font-size:clamp(1.4rem,3.4vw,2.15rem);
-  line-height:1.28;text-shadow:0 2px 20px rgba(0,0,0,.4);
+  line-height:1.28;
+  /* Sombra mais densa do que parece necessário: o véu foi clareado pra deixar
+     a cena aparecer, então o contraste do texto passou a depender daqui. */
+  text-shadow:0 2px 6px rgba(0,0,0,.55), 0 4px 26px rgba(0,0,0,.5);
 }
 .faixa-foto span{
   display:block;margin-top:1.1rem;
@@ -434,6 +449,54 @@ h3{font-size:1.22rem}
 }
 .convic__item .eixo__frase{font-size:clamp(1.2rem,2.4vw,1.5rem);margin-bottom:.7rem}
 .convic__item .eixo__corpo{margin-bottom:.8rem;font-size:.98rem}
+
+/* ====================== leque do instagram ======================
+   Mesmo componente do Rancho Canaã e da GeP. --passo (distância entre os
+   cards), --card (largura de referência) e --dyf (escala do desnível) governam
+   o leque inteiro: no celular ele só encolhe, nunca vira carrossel. */
+/* Branco de propósito: a seção anterior (convicções) é creme, e dois cremes
+   colados apagam a divisão entre as duas. */
+.insta{background:var(--papel);text-align:center;overflow:hidden}
+.insta__leque{
+  --passo:152px;--card:180px;--dyf:1px;
+  position:relative;z-index:1;height:300px;margin:2.5rem 0 1rem;
+}
+.insta__item{
+  --x:calc(var(--i) * var(--passo));
+  --y:calc(var(--dy) * var(--dyf));
+  display:block;position:absolute;top:50%;left:50%;
+  width:calc(var(--card) * var(--n));aspect-ratio:3/4;overflow:hidden;border-radius:18px;
+  box-shadow:0 12px 30px rgba(18,53,40,.28);
+  transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r));
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.insta__item:hover{
+  transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y) - 10px)) rotate(0deg) scale(1.05);
+  box-shadow:0 20px 40px rgba(18,53,40,.38);z-index:50 !important;
+}
+.insta__item img{width:100%;height:100%;object-fit:cover;display:block}
+.insta__cta{margin-top:1.5rem;position:relative;z-index:1}
+/* Estado inicial (cards recolhidos no centro): só com JS e sem "reduzir
+   movimento". Sem isso os cards já nascem na posição final — a classe é
+   reforço, não requisito. */
+.insta__item--entrando{
+  transform:translate(-50%,-50%) rotate(0deg) scale(.85);opacity:0;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .4s ease;
+}
+.insta__leque--visivel .insta__item--entrando{
+  transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(1);
+  opacity:1;
+}
+@media (max-width:760px){
+  .insta__leque{--passo:58px;--card:142px;--dyf:.5px;height:250px;margin:2rem 0 .5rem}
+  .insta__item{border-radius:13px;box-shadow:0 8px 20px rgba(18,53,40,.26)}
+  /* sem hover em toque: levantar card com o dedo em cima não acontece */
+  .insta__item:hover{
+    transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r));
+    box-shadow:0 8px 20px rgba(18,53,40,.26);
+  }
+}
+@media (max-width:400px){.insta__leque{--passo:52px;--card:126px;height:225px}}
 
 /* ====================== quiz de autoqualificação ====================== */
 /* Adaptado de templates/componentes/quiz-qualificacao.html.

@@ -37,9 +37,23 @@
     "postalCode": "35900-730",
     "addressCountry": "BR"
   },
+  "geo": { "@type": "GeoCoordinates", "latitude": -19.64016, "longitude": -43.233618 },
   "areaServed": { "@type": "City", "name": "Itabira" },
   "priceRange": "$$",
   "paymentAccepted": "Cartão de crédito, cartão de débito, pagamento por aproximação",
+  "hasMap": "https://maps.app.goo.gl/538YDozLyqymjekEA",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00", "closes": "11:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "13:00", "closes": "18:00"
+    }
+  ],
   "medicalSpecialty": "Dentistry",
   "availableService": [
     { "@type": "MedicalProcedure", "name": "Periodontia" },
@@ -74,8 +88,8 @@
     },
     {
       "@type": "Question",
-      "name": "Preciso marcar hora?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Sim. O atendimento é feito com hora marcada, para que cada paciente tenha o tempo que o caso pede. O agendamento é pelo WhatsApp ou pelo telefone do consultório." }
+      "name": "Qual o horário de atendimento?",
+      "acceptedAnswer": { "@type": "Answer", "text": "De segunda a sexta-feira, das 08:00 às 11:00 e das 13:00 às 18:00. Sábado e domingo o consultório não abre. O atendimento é sempre com hora marcada, agendada pelo WhatsApp ou pelo telefone." }
     },
     {
       "@type": "Question",
@@ -153,6 +167,7 @@
       <a href="#especialidades">Especialidades</a>
       <a href="#equipe">Equipe</a>
       <a href="#clinica">O consultório</a>
+      <a href="#instagram">Instagram</a>
       <a href="#quiz">Isso é pra mim?</a>
       <a href="#local">Onde fica</a>
     </nav>
@@ -194,19 +209,19 @@
   <div class="env credenciais__grade">
     <div class="cred">
       <svg class="cred__ico" aria-hidden="true"><use href="#i-tempo"/></svg>
-      <span><b>25 anos em Itabira</b>Periodontia na mesma cidade, desde o começo</span>
+      <span><b>25 anos em Itabira</b><i>·</i>na mesma cidade, desde o começo</span>
     </div>
     <div class="cred">
       <svg class="cred__ico" aria-hidden="true"><use href="#i-livro"/></svg>
-      <span><b>Professora na UNAItabira</b>Dra. Mariana Caldas, no curso de Odontologia</span>
+      <span><b>Professora na UNAItabira</b><i>·</i>curso de Odontologia</span>
     </div>
     <div class="cred">
       <svg class="cred__ico" aria-hidden="true"><use href="#i-premio"/></svg>
-      <span><b>Mestranda em Estomatologia</b>Formação que continua acontecendo</span>
+      <span><b>Mestranda em Estomatologia</b></span>
     </div>
     <div class="cred">
       <svg class="cred__ico" aria-hidden="true"><use href="#i-escudo"/></svg>
-      <span><b>Membro titular da SBTI</b>Sociedade Brasileira de Toxina Botulínica e Implantes Faciais na Odontologia</span>
+      <span><b>Membro titular da SBTI</b><i>·</i>toxina botulínica e implantes faciais</span>
     </div>
   </div>
 </section>
@@ -439,6 +454,33 @@
   </div>
 </section>
 
+<!-- ===== leque do instagram ===== -->
+<section class="secao insta" id="instagram">
+  <div class="env">
+    <span class="olho">No Instagram</span>
+    <h2>Ela explica antes de você precisar perguntar</h2>
+    <p class="chamada" style="margin-inline:auto;text-align:center">
+      São 1.356 publicações e 20,9 mil seguidores acompanhando — dicas de
+      cuidado, o que cada tratamento resolve e o dia a dia do consultório.
+    </p>
+
+    <div class="insta__leque">
+      <a class="insta__item" style="--i:-2;--dy:18;--r:-4deg;--n:.86;z-index:10" href="https://www.instagram.com/marianacaldasodontologia/" target="_blank" rel="noopener"><img src="assets/img/instagram/post-1.webp" alt="Publicação do Instagram: receber indicação de outro profissional é um voto de confiança" width="540" height="720" loading="lazy" decoding="async"></a>
+      <a class="insta__item" style="--i:-1;--dy:38;--r:-2deg;--n:.94;z-index:20" href="https://www.instagram.com/marianacaldasodontologia/" target="_blank" rel="noopener"><img src="assets/img/instagram/post-2.webp" alt="Publicação do Instagram: Dra. Mariana Caldas dando aula sobre periodontia" width="540" height="720" loading="lazy" decoding="async"></a>
+      <a class="insta__item" style="--i:0;--dy:4;--r:0deg;--n:1;z-index:40" href="https://www.instagram.com/marianacaldasodontologia/" target="_blank" rel="noopener"><img src="assets/img/instagram/post-3.webp" alt="Publicação do Instagram: realçar a beleza com naturalidade" width="540" height="720" loading="lazy" decoding="async"></a>
+      <a class="insta__item" style="--i:1;--dy:30;--r:2deg;--n:.94;z-index:20" href="https://www.instagram.com/drpaulocoelhoodontologia/" target="_blank" rel="noopener"><img src="assets/img/instagram/post-4.webp" alt="Publicação do Instagram: dentes não abrem garrafa" width="540" height="720" loading="lazy" decoding="async"></a>
+      <a class="insta__item" style="--i:2;--dy:12;--r:4deg;--n:.86;z-index:10" href="https://www.instagram.com/marianacaldasodontologia/" target="_blank" rel="noopener"><img src="assets/img/instagram/post-5.webp" alt="Publicação do Instagram: ilustração de atendimento odontológico" width="540" height="720" loading="lazy" decoding="async"></a>
+    </div>
+
+    <div class="insta__cta">
+      <a class="btn btn--linha" href="https://www.instagram.com/marianacaldasodontologia/" target="_blank" rel="noopener">
+        <svg class="btn__ico" aria-hidden="true"><use href="#i-insta"/></svg>
+        @marianacaldasodontologia
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ===== quiz de autoqualificação ===== -->
 <section class="qq" id="quiz" aria-labelledby="qq-titulo">
   <div class="qq__grid">
@@ -570,9 +612,12 @@
         </div>
       </details>
       <details>
-        <summary>Preciso marcar hora?</summary>
+        <summary>Qual o horário de atendimento?</summary>
         <div class="faq__corpo">
-          <p>Sim. O atendimento é feito com hora marcada, para que cada paciente
+          <p>De segunda a sexta-feira, das <strong>08:00 às 11:00</strong> e das
+          <strong>13:00 às 18:00</strong>. Sábado e domingo o consultório não
+          abre.</p>
+          <p>O atendimento é sempre com hora marcada, para que cada paciente
           tenha o tempo que o caso pede. O agendamento é pelo WhatsApp ou pelo
           telefone do consultório.</p>
         </div>
@@ -617,17 +662,27 @@
       </div>
       <div class="info-linha">
         <svg aria-hidden="true"><use href="#i-relogio"/></svg>
-        <span><b>Atendimento</b>Com hora marcada</span>
+        <span>
+          <b>Horário de atendimento</b>
+          <span class="horarios">
+            <span><em>Segunda a sexta</em>08:00 – 11:00 · 13:00 – 18:00</span>
+            <span><em>Sábado e domingo</em>Fechado</span>
+          </span>
+          Sempre com hora marcada.
+        </span>
       </div>
 
-      <a class="btn btn--claro mapa__ir" href="https://www.google.com/maps/search/?api=1&amp;query=Rua%20Amap%C3%A1%2C%2059%20-%20Amazonas%2C%20Itabira%20-%20MG%2C%2035900-730" target="_blank" rel="noopener">
-        Abrir no Google Maps
+      <a class="btn btn--claro mapa__ir" href="https://maps.app.goo.gl/538YDozLyqymjekEA" target="_blank" rel="noopener">
+        Ver a ficha no Google
       </a>
     </div>
 
     <div class="mapa">
+      <!-- Coordenadas tiradas da própria ficha do Google (maps.app.goo.gl/538YDozLyqymjekEA).
+           Busca por endereço deixava o alfinete no meio da rua; assim ele cai
+           no ponto exato da ficha, com o nome do consultório no balão. -->
       <iframe
-        src="https://www.google.com/maps?q=Rua%20Amap%C3%A1%2C%2059%20-%20Amazonas%2C%20Itabira%20-%20MG%2C%2035900-730&amp;z=16&amp;output=embed"
+        src="https://www.google.com/maps?q=-19.64016,-43.233618(Odontologia+Mariana+Caldas+Paulo+Coelho)&amp;z=16&amp;output=embed"
         title="Mapa com a localização do consultório na Rua Amapá, 59, Itabira/MG"
         loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
@@ -644,6 +699,8 @@
         <p>Odontologia Paulo Coelho · Mariana Caldas<br>
         Rua Amapá, 59 — Bairro Amazonas<br>
         Itabira/MG · 35900-730</p>
+        <p>Segunda a sexta, 08:00–11:00 e 13:00–18:00.<br>
+        Sábado e domingo fechado.</p>
       </div>
       <div>
         <h4>Contato</h4>
@@ -684,6 +741,27 @@
 </a>
 
 <script>
+// Leque do Instagram: os cards entram quando a seção aparece. Sem JS, ou com
+// "reduzir movimento" ligado, eles já nascem posicionados — a animação é
+// reforço, nunca requisito pra ver o conteúdo.
+(function () {
+  var leque = document.querySelector('.insta__leque');
+  if (!leque) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  leque.querySelectorAll('.insta__item').forEach(function (item, i) {
+    item.classList.add('insta__item--entrando');
+    item.style.transitionDelay = (i * 0.09) + 's';
+  });
+  var obs = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('insta__leque--visivel'); obs.disconnect(); }
+    });
+  }, { threshold: 0.35 });
+  obs.observe(leque);
+})();
+
 (function () {
   document.querySelectorAll('[data-quiz]').forEach(function (quiz) {
     var telefone  = quiz.dataset.telefone;
