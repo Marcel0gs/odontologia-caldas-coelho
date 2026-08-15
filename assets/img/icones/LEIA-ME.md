@@ -1,8 +1,6 @@
 # Ícones das especialidades
 
-Sete dos oito estão no site. **Falta `endodontia.png`** — nenhum dos arquivos
-enviados representava canal ou raiz, então esse card ainda mostra o glifo verde
-de reserva. É o único que destoa dos outros sete.
+Os oito estão no site.
 
 ## Mapeamento — o que virou o quê
 
@@ -10,15 +8,34 @@ de reserva. É o único que destoa dos outros sete.
 |---|---|
 | `periodontia.png` | `seguro-dental.png` (dente com escudo) |
 | `implantodontia.png` | `implantar.png` |
+| `endodontia.png` | `pngtree-endodontics-…jpg` — **ver a nota abaixo** |
 | `ortodontia.png` | `dente (1).png` (dente com bracket) |
 | `ofm.png` | `maxilar.png` (arcada) |
 | `dentistica.png` | `dente.png` (dente com brilhos) |
 | `odontopediatria.png` | `dentista.png` (personagem) |
 | `harmonizacao.png` | `perfil.png` (rosto com seringa) |
-| **`endodontia.png`** | **falta** — precisa de um ícone de canal / raiz |
 
 Sobrou sem uso: `aparelho-ortodontico.png`, redundante com o que foi pra
 ortodontia.
+
+### A nota do ícone de endodontia
+
+Esse veio em **JPG, com fundo branco sólido** — os outros sete vieram em PNG
+com alpha. Fundo branco dentro de um círculo sálvia apareceria como um quadrado
+branco, então o branco foi removido com `colorkey` no ffmpeg:
+
+```
+colorkey=0xFFFFFF:0.04:0.03
+```
+
+**Efeito colateral aceito:** o `colorkey` apaga *todo* branco da imagem, não só
+o do fundo — então o miolo do dente, que era branco, ficou vazado e mostra o
+sálvia por trás. Em 44px isso não se percebe: o que se lê é o contorno, a
+gengiva rosa, a polpa amarela e o instrumento. **Se um dia esse ícone for usado
+grande, o vazado aparece** e aí precisa do arquivo em PNG com alpha de verdade.
+
+Lição pro próximo: **pedir sempre PNG ou SVG com fundo transparente.** JPG não
+tem canal alpha, e recortar depois sempre custa alguma coisa.
 
 **Trocar de ideia é barato:** é só reconverter por cima, com o mesmo nome. O
 site não precisa de nenhuma alteração.
