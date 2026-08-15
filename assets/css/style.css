@@ -224,6 +224,10 @@ h3{font-size:1.22rem}
   background:var(--salvia-clara);
 }
 .card__ico svg{width:28px;height:28px;fill:var(--verde)}
+/* O glifo SVG é só reserva. Assim que o card ganha um ícone ilustrado, ele
+   precisa sumir: o PNG tem fundo transparente, então o glifo verde aparecia
+   POR TRÁS do desenho e virava um borrão escuro no meio do círculo. */
+[class*="card__ico--"] svg{display:none}
 /* Os ícones vieram como desenho solto em PNG transparente, não como círculo
    colorido cheio. Então o círculo é o `--salvia-clara` do próprio .card__ico e
    o desenho entra dentro dele, a 74% — nada de `cover`, que estouraria o
