@@ -97,9 +97,15 @@ h3{font-size:1.22rem}
 /* ====================== topo ====================== */
 .topo{
   position:sticky;top:0;z-index:50;
-  background:rgba(255,255,255,.94);
-  backdrop-filter:blur(10px);
+  /* Opaco no celular de propósito. `backdrop-filter` numa barra fixa obriga o
+     aparelho a refiltrar o fundo a cada quadro de scroll — é dos efeitos mais
+     caros que existem, e num celular modesto isso aparece como scroll travado.
+     O blur entra só a partir de 900px, onde há GPU sobrando. */
+  background:#fff;
   border-bottom:1px solid var(--borda);
+}
+@media (min-width:900px){
+  .topo{background:rgba(255,255,255,.94);backdrop-filter:blur(10px)}
 }
 .topo__env{display:flex;align-items:center;gap:1.5rem;min-height:70px}
 .marca{display:flex;align-items:center;gap:.7rem;text-decoration:none;flex:none}
@@ -237,14 +243,14 @@ h3{font-size:1.22rem}
   content:"";position:absolute;inset:0;border-radius:50%;
   background-size:74%;background-position:center;background-repeat:no-repeat;
 }
-.card__ico--periodontia::after{background-image:url("../img/icones/periodontia.png")}
-.card__ico--implante::after{background-image:url("../img/icones/implantodontia.png")}
-.card__ico--endodontia::after{background-image:url("../img/icones/endodontia.png")}
-.card__ico--ortodontia::after{background-image:url("../img/icones/ortodontia.png")}
-.card__ico--ofm::after{background-image:url("../img/icones/ofm.png")}
-.card__ico--dentistica::after{background-image:url("../img/icones/dentistica.png")}
-.card__ico--odontopediatria::after{background-image:url("../img/icones/odontopediatria.png")}
-.card__ico--harmonizacao::after{background-image:url("../img/icones/harmonizacao.png")}
+.card__ico--periodontia::after{background-image:url("../img/icones/periodontia.webp")}
+.card__ico--implante::after{background-image:url("../img/icones/implantodontia.webp")}
+.card__ico--endodontia::after{background-image:url("../img/icones/endodontia.webp")}
+.card__ico--ortodontia::after{background-image:url("../img/icones/ortodontia.webp")}
+.card__ico--ofm::after{background-image:url("../img/icones/ofm.webp")}
+.card__ico--dentistica::after{background-image:url("../img/icones/dentistica.webp")}
+.card__ico--odontopediatria::after{background-image:url("../img/icones/odontopediatria.webp")}
+.card__ico--harmonizacao::after{background-image:url("../img/icones/harmonizacao.webp")}
 .card h3{margin-bottom:.5rem;color:var(--verde-esc)}
 .card p{margin:0;font-size:.95rem;color:var(--texto-suave);line-height:1.55}
 

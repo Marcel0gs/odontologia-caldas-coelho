@@ -1,0 +1,19 @@
+# Cabeçalhos do Netlify. O GitHub Pages ignora este arquivo — lá o cache é o
+# padrão da plataforma, e não dá pra configurar.
+#
+# Por que isso importa no PageSpeed: sem cache longo, o Lighthouse acusa
+# "Serve static assets with an efficient cache policy" e a segunda visita
+# rebaixa tudo de novo.
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+# O HTML nunca entra em cache longo: é ele que aponta pros assets, e uma
+# correção de texto precisa aparecer na hora.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
