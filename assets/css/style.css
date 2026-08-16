@@ -563,7 +563,12 @@ h3{font-size:1.22rem}
   opacity:1;
 }
 @media (max-width:760px){
-  .insta__leque{--passo:58px;--card:142px;--dyf:.5px;height:250px;margin:2rem 0 .5rem}
+  /* --passo é a distância entre os cards. No celular eles se cobrem quase
+     inteiros; um passo um pouco maior deixa ver o conteúdo de cada um sem
+     desmanchar o leque. Cuidado: passo grande demais empurra os das pontas
+     pra fora e reaparece rolagem horizontal — conferir a sonda de 360px
+     depois de mexer aqui. */
+  .insta__leque{--passo:70px;--card:138px;--dyf:.5px;height:250px;margin:2rem 0 .5rem}
   .insta__item{border-radius:13px;box-shadow:0 8px 20px rgba(18,53,40,.26)}
   /* sem hover em toque: levantar card com o dedo em cima não acontece */
   .insta__item:hover{
@@ -571,7 +576,7 @@ h3{font-size:1.22rem}
     box-shadow:0 8px 20px rgba(18,53,40,.26);
   }
 }
-@media (max-width:400px){.insta__leque{--passo:52px;--card:126px;height:225px}}
+@media (max-width:400px){.insta__leque{--passo:62px;--card:122px;height:225px}}
 
 /* ====================== quiz de autoqualificação ====================== */
 /* Adaptado de templates/componentes/quiz-qualificacao.html.
