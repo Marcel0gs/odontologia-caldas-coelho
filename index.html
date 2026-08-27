@@ -12,12 +12,18 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Odontologia Paulo Coelho e Mariana Caldas — Itabira/MG">
 <meta property="og:description" content="Periodontia, implantes, ortodontia e harmonização orofacial em Itabira. Planejamento e execução com a mesma equipe.">
-<meta property="og:image" content="https://marcel0gs.github.io/odontologia-caldas-coelho/assets/img/fachada.webp">
+<meta property="og:image" content="https://marcel0gs.github.io/odontologia-caldas-coelho/assets/img/fachada-topo.webp">
 <meta property="og:locale" content="pt_BR">
 
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="assets/img/fachada-mobile.webp" media="(max-width: 700px)" fetchpriority="high">
-<link rel="preload" as="image" href="assets/img/fachada.webp" media="(min-width: 701px)" fetchpriority="high">
+
+<!-- Marca que o JS está disponível ANTES de qualquer pintura. É por essa classe
+     que o CSS decide se a barra do topo nasce transparente (sobre a fachada) ou
+     branca. O padrão sem JS é a barra branca — feia sobre a foto, mas legível.
+     Precisa ficar aqui em cima, sem `defer` e sem `async`. -->
+<script>document.documentElement.className+=" js";</script>
+<link rel="preload" as="image" href="assets/img/fachada-topo-mobile.webp" media="(max-width: 700px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/fachada-topo.webp" media="(min-width: 701px)" fetchpriority="high">
 <!-- ====================================================================
      CSS embutido de proposito, nao por preguica.
 
@@ -56,6 +62,11 @@
   --borda:#E4DED3;
   --raio:14px;
   --raio-g:22px;
+  /* Altura da barra do topo. Vive numa variável porque o hero precisa dela DUAS
+     vezes: uma pra subir por baixo da barra (margem negativa) e outra pra
+     devolver o espaço por dentro (padding-top). Mexeu no min-height do
+     .topo__env, mexe aqui junto — senão o título nasce coberto pela logo. */
+  --topo-h:70px;
   --sombra:0 1px 2px rgba(18,53,40,.05), 0 8px 28px rgba(18,53,40,.07);
 }
 
@@ -126,7 +137,22 @@ h3{font-size:1.22rem}
 .btn--linha:hover{background:var(--verde);color:#fff}
 .btn__ico{width:19px;height:19px;flex:none;fill:currentColor}
 
-/* ====================== topo ====================== */
+/* ====================== topo ======================
+   ============ A BARRA FICA INVISÍVEL EM CIMA DA FACHADA ============
+   Modelo da Realce Odontologia, trazido pra cá em 27/08/2026: a foto do hero
+   sobe por baixo do topo e ocupa a tela inteira, então a barra não pode ter
+   fundo enquanto estiver ali. Depois de 24px de rolagem, o branco volta.
+
+   ⚠️ O ESTADO PADRÃO É O BRANCO, NÃO O TRANSPARENTE — e é de propósito. Quem
+   entra sem JS recebe a barra branca desde o primeiro pixel: feia sobre a foto,
+   mas legível. Se o padrão fosse transparente, o mesmo visitante ficaria com a
+   marca branca em cima do mármore branco da fachada. Por isso o transparente
+   está preso em `.js .topo`, que só existe quando o script do <head> rodou.
+
+   ⚠️ ESTA FACHADA É CLARA, e isso muda as contas em relação à Realce. Lá o
+   topo da foto é parede bege; aqui é céu azul, tijolo e mármore branco. O fio
+   escuro no topo do hero precisa ser mais forte, e a marca ganha sombra dupla —
+   sem ela o infinito branco some no mármore. */
 .topo{
   position:sticky;top:0;z-index:50;
   /* Opaco no celular de propósito. `backdrop-filter` numa barra fixa obriga o
@@ -135,17 +161,24 @@ h3{font-size:1.22rem}
      O blur entra só a partir de 900px, onde há GPU sobrando. */
   background:#fff;
   border-bottom:1px solid var(--borda);
+  transition:background .28s ease,border-color .28s ease;
 }
 @media (min-width:900px){
   .topo{background:rgba(255,255,255,.94);backdrop-filter:blur(10px)}
 }
-.topo__env{display:flex;align-items:center;gap:1.5rem;min-height:70px}
+.js .topo{background:transparent;backdrop-filter:none;border-bottom-color:transparent}
+.js .topo--rolado{background:#fff;border-bottom-color:var(--borda)}
+@media (min-width:900px){
+  .js .topo--rolado{background:rgba(255,255,255,.94);backdrop-filter:blur(10px)}
+}
+/* ⚠️ Mexeu neste min-height, mexe no --topo-h junto. */
+.topo__env{display:flex;align-items:center;gap:1.5rem;min-height:var(--topo-h)}
 .marca{display:flex;align-items:center;gap:.7rem;text-decoration:none;flex:none}
 .marca__sinal{width:30px;height:38px;flex:none}
 .marca__txt{display:flex;flex-direction:column;line-height:1.12}
-.marca__nome{font-family:Georgia,serif;font-size:1rem;color:var(--verde-esc)}
+.marca__nome{font-family:Georgia,serif;font-size:1rem;color:var(--verde-esc);transition:color .28s ease}
 .marca__pt{font-style:normal;margin:0 .34em;color:var(--salvia)}
-.marca__sub{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--texto-suave)}
+.marca__sub{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--texto-suave);transition:color .28s ease}
 .menu{display:flex;gap:1.6rem;margin-left:auto;font-size:.94rem}
 .menu a{text-decoration:none;color:var(--texto-suave);transition:color .16s}
 .menu a:hover{color:var(--verde)}
@@ -154,11 +187,33 @@ h3{font-size:1.22rem}
   .menu{display:none}
   .topo .btn{margin-left:auto}
 }
+
+/* --- a barra sobre a foto ---------------------------------------------------
+   O infinito é SVG inline (não `<use>`), então o `stroke` dos dois traços pode
+   ser trocado daqui — os dois `url(#lg-*)` são atributos de apresentação, e
+   qualquer regra CSS ganha deles. Foi o que evitou ter que manter uma segunda
+   versão do desenho, como precisou ser feito na GeP.
+
+   As sombras não são enfeite: o mármore branco da fachada fica exatamente atrás
+   da marca, e sem elas o traço branco desaparece. */
+.js .topo:not(.topo--rolado) .marca__sinal path{stroke:#fff}
+.js .topo:not(.topo--rolado) .marca__sinal{filter:drop-shadow(0 1px 3px rgba(0,0,0,.6)) drop-shadow(0 2px 12px rgba(0,0,0,.5))}
+.js .topo:not(.topo--rolado) .marca__nome,
+.js .topo:not(.topo--rolado) .marca__sub{color:#fff}
+.js .topo:not(.topo--rolado) .marca__pt{color:rgba(255,255,255,.7)}
+.js .topo:not(.topo--rolado) .marca{text-shadow:0 1px 3px rgba(0,0,0,.65),0 2px 14px rgba(0,0,0,.5)}
+.js .topo:not(.topo--rolado) .menu a{color:rgba(255,255,255,.94);text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.js .topo:not(.topo--rolado) .menu a:hover{color:#fff}
+.js .topo:not(.topo--rolado) .topo__env .btn{box-shadow:0 6px 22px rgba(0,0,0,.34)}
+
 /* Em 360px os dois nomes numa linha só, ao lado do botão, estouravam a página
    em 66px — a .marca é `flex:none` e não encolhe. Quebrar em duas linhas
    resolve sem encurtar nome de ninguém, que é o que um consultório não perdoa. */
 @media (max-width:560px){
-  .topo__env{gap:.85rem;min-height:64px}
+  /* A variável desce junto com a barra: o hero usa ela pra subir por baixo do
+     topo, e fora de sincronia sobra ou falta faixa de foto. */
+  :root{--topo-h:64px}
+  .topo__env{gap:.85rem;min-height:var(--topo-h)}
   .marca__sinal{width:25px;height:32px}
   .marca__nome{font-size:.84rem;line-height:1.22}
   .marca__nome span{display:block}
@@ -167,41 +222,184 @@ h3{font-size:1.22rem}
   .topo .btn{padding:.55rem 1.05rem;font-size:.86rem}
 }
 
-/* ====================== hero ====================== */
+/* ====================== hero ======================
+   Foto ocupando a tela, véu por cima, texto embaixo à esquerda. Modelo da
+   Realce Odontologia, trazido pra cá em 27/08/2026 a pedido do usuário.
+
+   ⚠️ O QUE MUDOU EM RELAÇÃO À VERSÃO ANTERIOR, e por quê:
+
+   1. O VÉU DEIXOU DE SER UMA CORTINA. Antes era um degradê de cima a baixo em
+      TODA a largura (.20 → .82), o que apagava a foto inteira — inclusive o
+      letreiro, que é a melhor coisa dela. Agora são três camadas com funções
+      separadas: uma ELIPSE ancorada no canto de baixo à esquerda, que escurece
+      só onde o texto mora; uma faixa rasteira na base; e um fio no topo, só
+      pela barra. O miolo e o alto ficam com a foto limpa.
+
+   2. A FOTO OCUPA A TELA INTEIRA, inclusive por baixo da barra do topo. Daí a
+      dupla `margin-top:calc(-1 * var(--topo-h))` + o mesmo valor somado ao
+      padding-top. E `100svh`, não `100vh`: no celular o vh conta a barra de
+      endereço que ainda vai sumir, e os botões nasceriam abaixo da dobra.
+
+   3. A FOTO É OUTRA: `fachada-topo.webp`, gerada da imagem que o usuário
+      trouxe em 27/08/2026, de qualidade bem melhor que a `fachada.webp`.
+
+   ⚠️⚠️ A PLACA LATERAL FOI CORTADA FORA DO QUADRO, e isso NÃO é decisão
+   estética. A imagem nova foi gerada por IA a partir da foto real, e a placa
+   pequena do canto direito saiu com os registros **inventados**: "CPO 26573"
+   pro Dr. Paulo (não existe "CPO" — é CRO) e "CRO 26S72" pra Dra. Mariana
+   (o real é 26572, o "5" virou "S"). Na foto original esses números estão
+   ilegíveis, então não há de onde conferir. Número de conselho errado num site
+   de dentista é problema de CRO, não de design. O recorte tira os 198px da
+   direita e resolve na origem. **Se um dia a imagem for trocada, conferir se a
+   placa voltou ao quadro antes de publicar.**
+
+   ⚠️ ESTA FACHADA É CLARA — mármore branco, céu azul, calçada bege ao sol. É a
+   diferença mais importante em relação à Realce (parede bege, tom médio) e à
+   GeP (foto noturna). Todas as opacidades aqui são mais fortes que as de lá.
+   Se um dia a foto trocar por uma mais escura, elas podem afrouxar.
+
+   O `background-position` vertical é `center 34%`: o letreiro vive entre 36% e
+   55% da altura da foto — no MEIO, não no topo como nas outras duas fachadas.
+   Ancorar perto do centro mantém ele em quadro em qualquer proporção de tela. */
 .hero{
   position:relative;
   display:flex;align-items:flex-end;
-  min-height:min(88vh,780px);
-  padding:clamp(4rem,12vw,7rem) 0 clamp(2.5rem,6vw,4rem);
-  /* A foto entra por cima; o degradê embaixo é o que segura o visual se a
-     imagem faltar ou ainda não estiver convertida. Nunca fica quebrado. */
+  min-height:100vh;
+  min-height:100svh;
+  margin-top:calc(-1 * var(--topo-h));
+  padding:calc(var(--topo-h) + clamp(4rem,10vw,6rem)) 0 clamp(2.8rem,6vw,4.5rem);
   background-image:
-    linear-gradient(180deg,rgba(18,53,40,.20) 0%,rgba(18,53,40,.50) 55%,rgba(18,53,40,.82) 100%),
-    url("assets/img/fachada.webp"),
+    /* 1. o canto do texto — elipse grande ancorada embaixo, à esquerda */
+    radial-gradient(120% 100% at 4% 108%,
+      rgba(18,53,40,.95) 0%, rgba(18,53,40,.88) 24%, rgba(18,53,40,.66) 46%,
+      rgba(18,53,40,.34) 68%, rgba(18,53,40,0) 88%),
+    /* 2. base rasteira, largura toda: assenta o bloco e emenda com a faixa de
+          credenciais que vem logo abaixo */
+    linear-gradient(0deg, rgba(18,53,40,.62) 0%, rgba(18,53,40,.28) 14%, rgba(18,53,40,0) 34%),
+    /* 3. fio no topo, pela barra. Mais forte que o da Realce porque aqui o alto
+          da foto é céu e mármore branco, não parede bege. */
+    linear-gradient(180deg, rgba(12,36,27,.66) 0%, rgba(12,36,27,.46) 6%, rgba(12,36,27,.16) 14%, rgba(12,36,27,0) 26%),
+    url("assets/img/fachada-topo.webp"),
     linear-gradient(160deg,#2F7A5D 0%,#1E5C46 45%,#123528 100%);
-  background-size:cover,cover,cover;
-  background-position:center,center 42%,center;
+  background-size:cover,cover,cover,cover,cover;
+  background-position:center,center,center,center 62%,center;
+  background-repeat:no-repeat;
   color:#fff;
 }
-@media (max-width:700px){
-  .hero{
-    background-image:
-      linear-gradient(180deg,rgba(18,53,40,.24) 0%,rgba(18,53,40,.56) 50%,rgba(18,53,40,.88) 100%),
-      url("assets/img/fachada-mobile.webp"),
-      linear-gradient(160deg,#2F7A5D 0%,#1E5C46 45%,#123528 100%);
-  }
+
+/* Janela de desktop arrastada pra metade, tablet deitado curto: ali `cover`
+   corta pelas LATERAIS (a foto é 1250x1086, então qualquer quadro mais estreito
+   que 1,15:1 come largura) e o letreiro começa a perder as pontas. Reduzir a
+   altura mínima devolve largura visível. */
+@media (min-width:701px) and (max-aspect-ratio:5/4){
+  .hero{min-height:min(92svh,820px)}
 }
-.hero h1{max-width:17ch;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+
+.hero h1{max-width:26ch;text-shadow:0 2px 24px rgba(0,0,0,.5),0 1px 3px rgba(0,0,0,.4)}
 .hero__sub{
-  max-width:52ch;margin-top:1.4rem;
+  max-width:50ch;margin-top:1.3rem;
   font-size:clamp(1rem,2.1vw,1.14rem);color:#E3EBE7;
+  text-shadow:0 1px 12px rgba(0,0,0,.5);
 }
-.hero__acoes{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2rem}
+.hero__acoes{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:1.9rem}
 .hero__local{
   display:inline-flex;align-items:center;gap:.5rem;
   margin-bottom:1.1rem;padding:.4rem .9rem;border-radius:999px;
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);
   font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;
+  text-shadow:0 1px 8px rgba(0,0,0,.5);
+}
+
+/* Dica de rolagem na lateral direita, em pé. Existe porque o hero agora toma a
+   tela inteira: sem ela, a primeira tela parece uma imagem de abertura e não
+   uma página que continua. Só onde há espaço de sobra (>=1000px). É decorativa:
+   `aria-hidden` no HTML, não carrega informação que falte em outro lugar. */
+.hero__rolar{display:none}
+@media (min-width:1000px){
+  .hero__rolar{
+    display:flex;align-items:center;gap:.9rem;
+    position:absolute;right:clamp(1rem,2.4vw,2.2rem);bottom:clamp(2.5rem,6vw,4rem);
+    writing-mode:vertical-rl;
+    font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;
+    color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8),0 2px 16px rgba(0,0,0,.7);
+    /* ⚠️ A PÍLULA ESCURA NÃO EXISTE NA REALCE NEM NA GeP, e não é enfeite. Lá o
+       lado direito da foto é escuro (parede à noite, prédio vizinho) e a
+       sombra do texto bastava. Aqui é mármore branco e calçada bege ao sol —
+       branco sobre branco, ilegível num print a 1280px. A pílula devolve o
+       contraste sem escurecer a foto inteira. Se a foto do topo trocar por uma
+       de fundo escuro, ela pode sair. */
+    padding:.8rem .5rem;border-radius:999px;
+    background:rgba(12,36,27,.42);
+    -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  }
+  .hero__rolar::after{
+    content:"";width:2px;height:64px;border-radius:2px;
+    background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,0));
+    box-shadow:0 1px 8px rgba(0,0,0,.6);
+  }
+}
+
+/* ===================== HERO NO CELULAR =====================
+   ⚠️ ESTE BLOCO TEM QUE FICAR DEPOIS DE TODAS AS REGRAS BASE DO .hero — mesma
+   especificidade, e quem vem depois ganha.
+
+   ============ POR QUE AQUI A FOTO NÃO É `cover` ============
+   Esta é a diferença de mecânica em relação à GeP e à Realce, e ela existe
+   porque **esta fachada é horizontal e o letreiro ocupa quase toda a largura
+   dela**. Com `cover`, quanto mais alto o hero, mais a imagem é ampliada pra
+   cobrir a altura — e mais largura ela perde nas laterais. Hero alto = letreiro
+   cortado. Nas outras duas isso foi resolvido travando a altura do hero numa
+   proporção calculada da foto; aqui essa trava daria um hero baixo demais pro
+   texto caber sem subir por cima do letreiro.
+
+   A saída foi `background-size:100% auto`: a foto é desenhada com **exatamente
+   a largura da tela** e a altura que vier — então o letreiro NUNCA perde as
+   pontas, em nenhuma largura de aparelho. O que sobra de hero abaixo dela é
+   preenchido pelo degradê verde de base, que é a última camada. Não é falha: é
+   onde o texto mora, e ali o véu já está perto de opaco de qualquer jeito.
+
+   `fachada-topo-mobile.webp` é 830x1086 (recorte `crop=830:1086:400:0` da
+   imagem nova). A 830 de largura o letreiro ocupa 88% do quadro. **Trocou a
+   foto: refaz o recorte mirando essa proporção e confere com print a 390px.**
+
+   As contas, medidas em print de 390px (hero de 616px): a foto desenhada tem
+   130,8% da largura da tela, ou seja 510px — o letreiro cai entre 183px e
+   282px, bem abaixo da barra de 64px. O texto começa por volta de 336px. A
+   rampa do véu morre em 62%, que é logo abaixo do letreiro.
+   **Mexeu no `158vw` ou no tamanho do h1, refaz essa conta com print novo.** */
+@media (max-width:700px){
+  .hero{
+    min-height:calc(100vh - 3.2rem);
+    min-height:min(calc(100svh - 3.2rem),158vw);
+    padding:calc(var(--topo-h) + 1.2rem) 0 clamp(1.6rem,5vw,2.2rem);
+    background-image:
+      linear-gradient(0deg,
+        rgba(18,53,40,.96) 0%, rgba(18,53,40,.92) 12%, rgba(18,53,40,.84) 22%,
+        rgba(18,53,40,.70) 32%, rgba(18,53,40,.50) 42%, rgba(18,53,40,.28) 52%,
+        rgba(18,53,40,.10) 60%, rgba(18,53,40,0) 68%),
+      url("assets/img/fachada-topo-mobile.webp"),
+      linear-gradient(180deg,#3A6B55 0%,#24503E 34%,#123528 62%,#0E2A20 100%);
+    background-size:cover,100% auto,cover;
+    background-position:center,center top,center;
+  }
+  /* O SELO DE ENDEREÇO SAI NO CELULAR: ele encostava na linha "Paulo Coelho ·
+     Mariana Caldas" do letreiro — texto sobre texto, e o do letreiro é o mais
+     bonito dos dois. E é informação repetida: a seção "Onde fica" tem o
+     endereço por escrito, com mapa e botão de rota. */
+  .hero__local{display:none}
+  .hero h1{max-width:none;font-size:clamp(1.75rem,7.4vw,2.5rem)}
+  .hero__sub{font-size:1rem;margin-top:1.1rem}
+  /* ⚠️ O `.hero ` NA FRENTE É OBRIGATÓRIO. Na Realce a classe `.hero__acoes` foi
+     reusada em outras seções e estas regras sem escopo esticaram a coluna do
+     grid delas — com `nowrap`, item de flex não encolhe abaixo do próprio
+     min-content, e o texto saía cortado no celular. Se um dia esse par lado a
+     lado for desejado em outra seção, criar uma classe própria. */
+  .hero .hero__acoes{margin-top:1.4rem;gap:.5rem;flex-wrap:nowrap}
+  .hero .hero__acoes .btn{
+    flex:1 1 0;justify-content:center;white-space:nowrap;
+    padding:.66rem .5rem;font-size:clamp(.76rem,3.5vw,.88rem);
+  }
+  .hero .hero__acoes .btn__ico{width:15px;height:15px}
 }
 
 /* ====================== faixa de credenciais ====================== */
@@ -366,7 +564,7 @@ h3{font-size:1.22rem}
 .clinica__foto{
   aspect-ratio:4/3;border-radius:var(--raio-g);
   background-color:var(--areia);
-  background-image:url("assets/img/fachada.webp");
+  background-image:url("assets/img/fachada-topo.webp");
   background-size:cover;background-position:center;
   box-shadow:var(--sombra);
 }
@@ -718,7 +916,7 @@ h3{font-size:1.22rem}
   "@type": "Dentist",
   "name": "Odontologia Paulo Coelho e Mariana Caldas",
   "description": "Consultório odontológico em Itabira/MG com periodontia, implantodontia, endodontia, dentística, ortodontia, ortopedia funcional dos maxilares, atendimento infantil e harmonização orofacial.",
-  "image": "https://marcel0gs.github.io/odontologia-caldas-coelho/assets/img/fachada.webp",
+  "image": "https://marcel0gs.github.io/odontologia-caldas-coelho/assets/img/fachada-topo.webp",
   "url": "https://marcel0gs.github.io/odontologia-caldas-coelho/",
   "telephone": "+553138340002",
   "address": {
@@ -887,8 +1085,8 @@ h3{font-size:1.22rem}
     </span>
     <h1>Seu sorriso saudável, com o carinho que você merece.</h1>
     <p class="hero__sub">
-      Consultório do Dr. Paulo Coelho e da Dra. Mariana Caldas, em Itabira.
-      Periodontia, implantes, endodontia, ortodontia e harmonização orofacial.
+      Dr. Paulo Coelho e Dra. Mariana Caldas — periodontia, implantes,
+      ortodontia e harmonização orofacial, em Itabira.
     </p>
     <div class="hero__acoes">
       <a class="btn btn--claro" href="https://wa.me/553138340002?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o." target="_blank" rel="noopener">
@@ -900,6 +1098,7 @@ h3{font-size:1.22rem}
       </a>
     </div>
   </div>
+  <span class="hero__rolar" aria-hidden="true">Role para conhecer</span>
 </section>
 
 <!-- ===== credenciais ===== -->
@@ -1526,6 +1725,31 @@ h3{font-size:1.22rem}
 <a class="zap" href="https://wa.me/553138340002?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
   <svg aria-hidden="true"><use href="#i-zap"/></svg>
 </a>
+
+<script>
+// Barra do topo: transparente enquanto está sobre a fachada, branca depois de
+// 24px de rolagem. Só isso — o hero em si não depende de script nenhum.
+//
+// O estado transparente vive em `.js .topo` (ver CSS): quem entra sem JS recebe
+// a barra branca desde o primeiro pixel, que é o único estado legível sem
+// alguém pra tirá-la dali.
+(function () {
+  var topo = document.querySelector('.topo');
+  if (!topo) return;
+  var agendado = false, rolado = null;
+  function aplicar() {
+    agendado = false;
+    var agora = window.scrollY > 24;
+    if (agora === rolado) return;   // descarta quadro que não muda nada
+    rolado = agora;
+    topo.classList.toggle('topo--rolado', agora);
+  }
+  window.addEventListener('scroll', function () {
+    if (!agendado) { agendado = true; requestAnimationFrame(aplicar); }
+  }, { passive: true });
+  aplicar();   // recarregar no meio da página já nasce com o estado certo
+})();
+</script>
 
 <script>
 // Leque do Instagram: os cards entram quando a seção aparece. Sem JS, ou com

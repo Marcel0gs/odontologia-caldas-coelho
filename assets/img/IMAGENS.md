@@ -5,8 +5,8 @@ Convertidas em 15/08/2026 com ffmpeg, a partir dos originais em
 
 | Arquivo | Origem | Corte / tratamento |
 |---|---|---|
-| `fachada.webp` 1600×1186 | `ScreenShot_20260815182259.png` | escalado pra 1600 (lanczos). Hero no desktop |
-| `fachada-mobile.webp` 820×1244 | `ScreenShot_20260815182347.png` | `crop=580:880:230:45` — a foto larga recortada em vertical. Pega a fachada inteira com a placa legível, o que a foto de perto não consegue num quadro vertical |
+| `fachada-topo.webp` 1250×916 | `ChatGPT Image 27 de ago. de 2026, 15_15_37.png` | `crop=1250:916:0:170`. Hero no desktop, e também o card da seção "O consultório" |
+| `fachada-topo-mobile.webp` 830×1086 | a mesma imagem | `crop=830:1086:400:0` — recorte vertical centrado no letreiro, que a 830 de largura ocupa 88% do quadro |
 | `atendimento.webp` 1400×854 | `ScreenShot_20260815182317.png` | **`crop=1263:770:0:0` — corta a paciente inteira fora do quadro.** Ver a regra abaixo |
 | `dupla.webp` 500×500 | `fdafafadme.png` | sem corte |
 | `dra-mariana.webp` 800×1000 | `ScreenShot_20260815173303.png` | `crop=608:760:120:0` pra 4:5 |
@@ -42,9 +42,30 @@ não vai. Não reintroduzir "porque ela mesma já postou".
    Antes de publicar de verdade, confirmar com a Mariana se o uso em site está
    liberado.
 
+## A imagem do topo é gerada por IA — e isso tem uma consequência
+
+`ChatGPT Image 27 de ago. de 2026, 15_15_37.png` foi trazida pelo usuário em
+27/08/2026: é a fachada real reconstruída com qualidade bem melhor que o print
+que estava no ar. Substituiu `fachada.webp` e `fachada-mobile.webp`, que foram
+pra `Fotos e Imagens/fachada-antiga/`.
+
+⚠️ **O recorte do desktop corta a placa lateral do canto direito de propósito,
+e não é decisão estética.** A IA reconstruiu aquela placa com os registros
+**inventados**:
+
+- "**CPO** 26573" pro Dr. Paulo — não existe "CPO", o conselho é o CRO
+- "CRO 26**S**72" pra Dra. Mariana — o real é **26572**, e o "5" virou "S"
+
+Na foto original esses números estão ilegíveis, então não há de onde conferir.
+Número de conselho errado em site de dentista é assunto de CRO, não de design —
+o Código de Ética Odontológica manda o registro estar correto e visível. Os
+`crop` acima resolvem na origem, tirando a placa do quadro.
+
+**Se a imagem do topo for trocada um dia, conferir se a placa voltou ao quadro
+antes de publicar.** E vale a regra geral: em imagem gerada por IA, todo texto
+que aparece dentro dela é suspeito até ser conferido contra a fonte real.
+
 ## Se aparecerem originais melhores
 
-`fachada.webp` veio de um print de 1259px de largura e foi escalado pra 1600 —
-funciona sob o degradê do hero, mas o arquivo original da câmera renderia
-melhor em tela grande. `dupla.webp` tem só 500×500 e é a mais fraca do
-conjunto. Se ela mandar as originais, é só reconverter com os mesmos nomes.
+`dupla.webp` tem só 500×500 e é a mais fraca do conjunto. Se ela mandar as
+originais da câmera, é só reconverter com os mesmos nomes.
