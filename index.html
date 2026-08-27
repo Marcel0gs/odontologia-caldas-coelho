@@ -426,20 +426,88 @@ h3{font-size:1.22rem}
   .hero .hero__acoes .btn__ico{width:15px;height:15px}
 }
 
-/* ====================== faixa de credenciais ====================== */
-/* Faixa fina de propósito: é uma linha de credenciais, não uma seção. Quando
+/* ====================== faixa de credenciais ======================
+   Faixa fina de propósito: é uma linha de credenciais, não uma seção. Quando
    cada item ocupava três linhas de texto ela virava um bloco alto e roubava o
-   peso do hero logo acima. Agora o nome da credencial fica em negrito e o
-   detalhe vem na mesma linha, separado por um ponto. */
+   peso do hero logo acima. Por isso o nome da credencial fica em negrito e o
+   detalhe vem na mesma linha, separado por um ponto.
+
+   ⚠️ NO CELULAR ELA VIRA LETREIRO ROLANTE, e isso não é enfeite. Empilhada em
+   quatro linhas ela tinha ~140px de altura, logo abaixo de um hero cuja base
+   também é verde-escura — as duas coisas liam como uma barra grossa só. O
+   usuário reprovou em 27/08/2026: *"aquele letreiro embaixo ficou muito espesso
+   e não combinou"*. Rolando, ela ocupa UMA linha e volta a ser o fio fino que
+   sempre quis ser. Mesmo padrão da Realce e da GeP.
+
+   **Aqui ela rola só até 700px.** No desktop os quatro itens cabem numa linha
+   com folga, e o layout de grade continua sendo o melhor — diferente da Realce,
+   onde o usuário pediu o letreiro rolando também em tela grande.
+
+   COMO O LOOP FECHA SEM COSTURA. O truque padrão de letreiro em CSS puro é
+   duplicar o conteúdo: dois `.credenciais__trilho` iguais, lado a lado dentro
+   de `.credenciais__pista`. Anima-se a PISTA (o pai), não os trilhos, e o alvo
+   é -50% — não -100%. A pista tem a largura dos DOIS trilhos somados; 50% dela
+   é exatamente a largura de UM trilho. Deslocar essa distância exata faz o
+   trilho B pousar pixel a pixel onde o A começou — como são idênticos, o olho
+   não percebe o corte. **Se entrar uma credencial nova, ela tem que entrar nos
+   DOIS trilhos**, senão o loop passa a repetir informação diferente por meia
+   volta.
+
+   ACESSIBILIDADE. O segundo trilho tem `aria-hidden="true"`: é visual, existe
+   só pro loop funcionar, e leitor de tela não deve ler os itens duas vezes. */
 .credenciais{background:var(--verde-esc);color:#B9CBC3;padding:.95rem 0}
-.credenciais__grade{
+.credenciais__pista{
   display:grid;gap:.55rem 1.8rem;
   grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 }
+/* No desktop os trilhos não existem como caixa: `display:contents` faz os
+   quatro `.cred` caírem direto na grade da pista, exatamente como antes. */
+.credenciais__trilho{display:contents}
+.credenciais__trilho[aria-hidden]{display:none}
 .cred{display:flex;gap:.6rem;align-items:baseline;font-size:.85rem;line-height:1.4}
 .cred__ico{width:15px;height:15px;flex:none;align-self:center;fill:var(--salvia)}
 .cred b{color:#fff;font-weight:600}
 .cred i{font-style:normal;color:var(--salvia);margin:0 .35em}
+
+@media (max-width:700px){
+  .credenciais{overflow:hidden;padding:.8rem 0}
+  /* A pista deixa de ser grade e vira trilha: `width:max-content` pra ela poder
+     ser mais larga que a tela (é o que um letreiro precisa), e `padding-left`
+     pra o primeiro item não nascer colado na borda. O `.env` tem margem
+     automática — aqui ela some, senão a pista fica centrada e o loop salta. */
+  .credenciais__pista{
+    display:flex;flex-wrap:nowrap;width:max-content;
+    margin-inline:0;gap:0;padding-left:1.15rem;
+    animation:credenciais 26s linear infinite;
+    will-change:transform;
+  }
+  /* `flex:none` impede o flexbox de espremer os trilhos pra caber na tela, que
+     é o oposto do que o letreiro precisa. */
+  .credenciais__trilho{
+    display:flex;flex:none;align-items:center;
+    gap:1.9rem;padding-right:1.9rem;
+  }
+  .credenciais__trilho[aria-hidden]{display:flex}
+  .cred{white-space:nowrap}
+}
+@keyframes credenciais{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+/* Movimento desligado não pode só congelar a animação: parados lado a lado, os
+   oito itens seriam mais largos que a tela e metade ficaria cortada pra sempre.
+   A saída é voltar ao layout empilhado — mais alto do que o ideal, mas inteiro
+   e legível, que é o que importa pra quem pediu menos movimento. */
+@media (prefers-reduced-motion:reduce) and (max-width:700px){
+  .credenciais{overflow:visible}
+  .credenciais__pista{
+    display:grid;animation:none;width:auto;margin-inline:auto;padding-left:0;
+    gap:.55rem;grid-template-columns:1fr;
+  }
+  .credenciais__trilho{display:contents}
+  .credenciais__trilho[aria-hidden]{display:none}
+  .cred{white-space:normal}
+}
 
 /* ====================== convicções (os dois eixos) ====================== */
 .eixos{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
@@ -1125,24 +1193,50 @@ h3{font-size:1.22rem}
   <span class="hero__rolar" aria-hidden="true">Role para conhecer</span>
 </section>
 
-<!-- ===== credenciais ===== -->
+<!-- ===== credenciais =====
+     ⚠️ OS QUATRO ITENS APARECEM DUAS VEZES DE PROPÓSITO — é o que faz o
+     letreiro do celular fechar o loop sem costura. Ver o comentário grande no
+     CSS. **Se uma credencial mudar (título novo, sociedade nova), muda nos DOIS
+     trilhos**, senão o loop passa a mostrar informação diferente por meia volta.
+     O segundo trilho é `aria-hidden`: existe só pro loop, e leitor de tela não
+     deve ler os mesmos itens duas vezes. -->
 <section class="credenciais">
-  <div class="env credenciais__grade">
-    <div class="cred">
-      <svg class="cred__ico" aria-hidden="true"><use href="#i-tempo"/></svg>
-      <span><b>25 anos em Itabira</b><i>·</i>na mesma cidade, desde o começo</span>
+  <div class="env credenciais__pista">
+    <div class="credenciais__trilho">
+      <div class="cred">
+        <svg class="cred__ico" aria-hidden="true"><use href="#i-tempo"/></svg>
+        <span><b>25 anos em Itabira</b><i>·</i>na mesma cidade, desde o começo</span>
+      </div>
+      <div class="cred">
+        <svg class="cred__ico" aria-hidden="true"><use href="#i-livro"/></svg>
+        <span><b>Professora na UNAItabira</b><i>·</i>curso de Odontologia</span>
+      </div>
+      <div class="cred">
+        <svg class="cred__ico" aria-hidden="true"><use href="#i-premio"/></svg>
+        <span><b>Mestranda em Estomatologia</b></span>
+      </div>
+      <div class="cred">
+        <svg class="cred__ico" aria-hidden="true"><use href="#i-escudo"/></svg>
+        <span><b>Membro titular da SBTI</b><i>·</i>toxina botulínica e implantes faciais</span>
+      </div>
     </div>
-    <div class="cred">
-      <svg class="cred__ico" aria-hidden="true"><use href="#i-livro"/></svg>
-      <span><b>Professora na UNAItabira</b><i>·</i>curso de Odontologia</span>
-    </div>
-    <div class="cred">
-      <svg class="cred__ico" aria-hidden="true"><use href="#i-premio"/></svg>
-      <span><b>Mestranda em Estomatologia</b></span>
-    </div>
-    <div class="cred">
-      <svg class="cred__ico" aria-hidden="true"><use href="#i-escudo"/></svg>
-      <span><b>Membro titular da SBTI</b><i>·</i>toxina botulínica e implantes faciais</span>
+    <div class="credenciais__trilho" aria-hidden="true">
+      <div class="cred">
+        <svg class="cred__ico" aria-hidden="true"><use href="#i-tempo"/></svg>
+        <span><b>25 anos em Itabira</b><i>·</i>na mesma cidade, desde o começo</span>
+      </div>
+      <div class="cred">
+        <svg class="cred__ico" aria-hidden="true"><use href="#i-livro"/></svg>
+        <span><b>Professora na UNAItabira</b><i>·</i>curso de Odontologia</span>
+      </div>
+      <div class="cred">
+        <svg class="cred__ico" aria-hidden="true"><use href="#i-premio"/></svg>
+        <span><b>Mestranda em Estomatologia</b></span>
+      </div>
+      <div class="cred">
+        <svg class="cred__ico" aria-hidden="true"><use href="#i-escudo"/></svg>
+        <span><b>Membro titular da SBTI</b><i>·</i>toxina botulínica e implantes faciais</span>
+      </div>
     </div>
   </div>
 </section>
