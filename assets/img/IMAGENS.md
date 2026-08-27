@@ -5,8 +5,8 @@ Convertidas em 15/08/2026 com ffmpeg, a partir dos originais em
 
 | Arquivo | Origem | Corte / tratamento |
 |---|---|---|
-| `fachada-topo.webp` 1250×916 | `ChatGPT Image 27 de ago. de 2026, 15_15_37.png` | `crop=1250:916:0:170`. Hero no desktop, e também o card da seção "O consultório" |
-| `fachada-topo-mobile.webp` 830×1086 | a mesma imagem | `crop=830:1086:400:0` — recorte vertical centrado no letreiro, que a 830 de largura ocupa 88% do quadro |
+| `fachada-topo.webp` 1100×921 | `ChatGPT Image 27 de ago. de 2026, 15_58_58.png` | `crop=1100:921:150:150`. Hero no desktop, e também o card da seção "O consultório" |
+| `fachada-topo-mobile.webp` 540×891 | a mesma imagem | `crop=540:891:520:180` — recorte de retrato centrado no letreiro, que a 540 de largura ocupa 66% do quadro. Calçada e rua embaixo (onde o texto mora), prédio e céu em cima (onde a barra fica) |
 | `atendimento.webp` 1400×854 | `ScreenShot_20260815182317.png` | **`crop=1263:770:0:0` — corta a paciente inteira fora do quadro.** Ver a regra abaixo |
 | `dupla.webp` 500×500 | `fdafafadme.png` | sem corte |
 | `dra-mariana.webp` 800×1000 | `ScreenShot_20260815173303.png` | `crop=608:760:120:0` pra 4:5 |
@@ -42,28 +42,33 @@ não vai. Não reintroduzir "porque ela mesma já postou".
    Antes de publicar de verdade, confirmar com a Mariana se o uso em site está
    liberado.
 
-## A imagem do topo é gerada por IA — e isso tem uma consequência
+## A imagem do topo é gerada por IA — duas coisas a saber
 
-`ChatGPT Image 27 de ago. de 2026, 15_15_37.png` foi trazida pelo usuário em
-27/08/2026: é a fachada real reconstruída com qualidade bem melhor que o print
-que estava no ar. Substituiu `fachada.webp` e `fachada-mobile.webp`, que foram
-pra `Fotos e Imagens/fachada-antiga/`.
+O usuário trouxe duas em 27/08/2026, ambas reconstruções da fachada real com
+qualidade bem melhor que o print que estava no ar:
 
-⚠️ **O recorte do desktop corta a placa lateral do canto direito de propósito,
-e não é decisão estética.** A IA reconstruiu aquela placa com os registros
-**inventados**:
+1. `ChatGPT Image 27 de ago. de 2026, 15_15_37.png` — plano **fechado**. Usada
+   por algumas horas e descartada: num quadro de retrato ela não dava altura
+   pro texto sem cortar o letreiro nas pontas, e a saída de emergência (desenhar
+   a foto com `100% auto` e completar o resto do hero com degradê verde) virou
+   um bloco verde chapado no celular. Reprovada pelo usuário.
+2. `ChatGPT Image 27 de ago. de 2026, 15_58_58.png` — plano **aberto**, a que
+   está em uso. Nela o letreiro ocupa uma fatia menor da largura, o que permite
+   um recorte de retrato de verdade, com foto de cima a baixo do hero.
 
-- "**CPO** 26573" pro Dr. Paulo — não existe "CPO", o conselho é o CRO
-- "CRO 26**S**72" pra Dra. Mariana — o real é **26572**, e o "5" virou "S"
+As duas substituíram `fachada.webp` e `fachada-mobile.webp`, que foram pra
+`Fotos e Imagens/fachada-antiga/`.
 
-Na foto original esses números estão ilegíveis, então não há de onde conferir.
-Número de conselho errado em site de dentista é assunto de CRO, não de design —
-o Código de Ética Odontológica manda o registro estar correto e visível. Os
-`crop` acima resolvem na origem, tirando a placa do quadro.
+**Sobre os registros de conselho na placa lateral.** A imagem gerada reconstruiu
+a plaquinha do canto direito com os números legíveis, e eles pareciam invenção
+da IA (na foto original estão ilegíveis). Chegaram a ser cortados fora do
+quadro. **O usuário conferiu no site do conselho e confirmou que estão certos:
+Dr. Paulo Coelho 26573 e Dra. Mariana Caldas 26572.** A placa voltou pro quadro.
 
-**Se a imagem do topo for trocada um dia, conferir se a placa voltou ao quadro
-antes de publicar.** E vale a regra geral: em imagem gerada por IA, todo texto
-que aparece dentro dela é suspeito até ser conferido contra a fonte real.
+⚠️ A regra que sobrevive disso continua valendo pra qualquer imagem gerada:
+**texto dentro de imagem de IA é suspeito até ser conferido na fonte.** Aqui a
+fonte confirmou — mas o passo de conferir não pode ser pulado, ainda mais em
+site de dentista, onde registro de conselho é assunto de CRO.
 
 ## Se aparecerem originais melhores
 

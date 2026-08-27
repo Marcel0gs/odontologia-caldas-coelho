@@ -240,27 +240,32 @@ h3{font-size:1.22rem}
       padding-top. E `100svh`, não `100vh`: no celular o vh conta a barra de
       endereço que ainda vai sumir, e os botões nasceriam abaixo da dobra.
 
-   3. A FOTO É OUTRA: `fachada-topo.webp`, gerada da imagem que o usuário
-      trouxe em 27/08/2026, de qualidade bem melhor que a `fachada.webp`.
+   3. A FOTO É OUTRA: `fachada-topo.webp`, gerada em 27/08/2026 da segunda
+      imagem que o usuário trouxe — um plano ABERTO da fachada, que substituiu
+      tanto a `fachada.webp` antiga quanto o plano fechado da manhã do mesmo
+      dia. O motivo do plano aberto está no bloco de celular, mais abaixo.
 
-   ⚠️⚠️ A PLACA LATERAL FOI CORTADA FORA DO QUADRO, e isso NÃO é decisão
-   estética. A imagem nova foi gerada por IA a partir da foto real, e a placa
-   pequena do canto direito saiu com os registros **inventados**: "CPO 26573"
-   pro Dr. Paulo (não existe "CPO" — é CRO) e "CRO 26S72" pra Dra. Mariana
-   (o real é 26572, o "5" virou "S"). Na foto original esses números estão
-   ilegíveis, então não há de onde conferir. Número de conselho errado num site
-   de dentista é problema de CRO, não de design. O recorte tira os 198px da
-   direita e resolve na origem. **Se um dia a imagem for trocada, conferir se a
-   placa voltou ao quadro antes de publicar.**
+   ⚠️ A PLACA LATERAL FICA NO QUADRO, e vale registrar por quê. Num primeiro
+   momento ela foi cortada fora: a imagem é gerada por IA, e os registros de
+   conselho que aparecem nela pareciam invenção. **O usuário conferiu no site
+   do conselho e confirmou: os números estão certos** — Dr. Paulo Coelho
+   **26573** e Dra. Mariana Caldas **26572**. A placa voltou.
+   A regra que sobrevive disso, e essa continua valendo: **texto dentro de
+   imagem gerada por IA é suspeito até ser conferido na fonte** — só que aqui
+   a fonte confirmou, então não há o que esconder.
 
    ⚠️ ESTA FACHADA É CLARA — mármore branco, céu azul, calçada bege ao sol. É a
    diferença mais importante em relação à Realce (parede bege, tom médio) e à
    GeP (foto noturna). Todas as opacidades aqui são mais fortes que as de lá.
    Se um dia a foto trocar por uma mais escura, elas podem afrouxar.
 
-   O `background-position` vertical é `center 34%`: o letreiro vive entre 36% e
-   55% da altura da foto — no MEIO, não no topo como nas outras duas fachadas.
-   Ancorar perto do centro mantém ele em quadro em qualquer proporção de tela. */
+   O `background-position` vertical é `center 60%`: o letreiro vive na metade
+   de cima do recorte, e ancorar mais pro fim empurra ele pra cima do quadro —
+   é o que abre a metade de baixo (calçada e rua) pro texto morar sem cair em
+   cima da escrita da placa. **Foi exatamente esse o erro da primeira
+   tentativa**, e o print mostrou na hora: o h1 nascia por cima de
+   "ODONTOLOGIA". */
+
 .hero{
   position:relative;
   display:flex;align-items:flex-end;
@@ -282,7 +287,7 @@ h3{font-size:1.22rem}
     url("assets/img/fachada-topo.webp"),
     linear-gradient(160deg,#2F7A5D 0%,#1E5C46 45%,#123528 100%);
   background-size:cover,cover,cover,cover,cover;
-  background-position:center,center,center,center 62%,center;
+  background-position:center,center,center,center 60%,center;
   background-repeat:no-repeat;
   color:#fff;
 }
@@ -301,6 +306,10 @@ h3{font-size:1.22rem}
   font-size:clamp(1rem,2.1vw,1.14rem);color:#E3EBE7;
   text-shadow:0 1px 12px rgba(0,0,0,.5);
 }
+/* Os nomes viram uma linha própria acima da lista de especialidades. Assim eles
+   podem sair no celular sem quebrar a frase no meio — ver o `.hero__nomes` no
+   bloco de celular, e o porquê lá. */
+.hero__nomes{display:block;margin-bottom:.28rem;font-weight:600;color:#fff}
 .hero__acoes{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:1.9rem}
 .hero__local{
   display:inline-flex;align-items:center;gap:.5rem;
@@ -343,43 +352,54 @@ h3{font-size:1.22rem}
    ⚠️ ESTE BLOCO TEM QUE FICAR DEPOIS DE TODAS AS REGRAS BASE DO .hero — mesma
    especificidade, e quem vem depois ganha.
 
-   ============ POR QUE AQUI A FOTO NÃO É `cover` ============
-   Esta é a diferença de mecânica em relação à GeP e à Realce, e ela existe
-   porque **esta fachada é horizontal e o letreiro ocupa quase toda a largura
-   dela**. Com `cover`, quanto mais alto o hero, mais a imagem é ampliada pra
-   cobrir a altura — e mais largura ela perde nas laterais. Hero alto = letreiro
-   cortado. Nas outras duas isso foi resolvido travando a altura do hero numa
-   proporção calculada da foto; aqui essa trava daria um hero baixo demais pro
-   texto caber sem subir por cima do letreiro.
+   ============ A FOTO ABERTA RESOLVEU O CELULAR ============
+   ⚠️ HOUVE UMA VERSÃO COM `background-size:100% auto` AQUI, e ela foi
+   reprovada pelo usuário em 27/08/2026, nestas palavras: *"no mobile, a imagem
+   no topo da página ficou muito ruim e aquele letreiro embaixo ficou muito
+   espesso e não combinou"*.
 
-   A saída foi `background-size:100% auto`: a foto é desenhada com **exatamente
-   a largura da tela** e a altura que vier — então o letreiro NUNCA perde as
-   pontas, em nenhuma largura de aparelho. O que sobra de hero abaixo dela é
-   preenchido pelo degradê verde de base, que é a última camada. Não é falha: é
-   onde o texto mora, e ali o véu já está perto de opaco de qualquer jeito.
+   O que tinha acontecido: a primeira imagem era um plano FECHADO da fachada
+   (horizontal), e num quadro de retrato ela não dava altura pro texto sem o
+   letreiro ser cortado nas pontas. A saída da época foi desenhar a foto com
+   `100% auto` e deixar o resto do hero no degradê verde. Funcionava na teoria,
+   mas na tela virava um bloco verde chapado ocupando quase metade do topo — e
+   ele emendava com a faixa de credenciais, que também é verde-escuro. As duas
+   coisas juntas liam como uma barra grossa só, sem foto. Era isso o "espesso".
 
-   `fachada-topo-mobile.webp` é 830x1086 (recorte `crop=830:1086:400:0` da
-   imagem nova). A 830 de largura o letreiro ocupa 88% do quadro. **Trocou a
-   foto: refaz o recorte mirando essa proporção e confere com print a 390px.**
+   A correção não foi de CSS: **foi foto**. O usuário trouxe um plano ABERTO da
+   fachada, e nele o letreiro ocupa uma fatia menor da largura — o que permite
+   um recorte de retrato de verdade (540x891, `crop=540:891:520:180`), com o
+   letreiro em 66% da largura, calçada e rua embaixo pro texto morar, e prédio e
+   céu em cima pra barra. Com isso a foto voltou a ser `cover` e cobre o hero
+   inteiro. **A lição, que já tinha aparecido na Realce: quando o topo mobile
+   não fecha, a pergunta certa não é "que gradiente resolve" — é "essa foto tem
+   área vazia?".**
 
-   As contas, medidas em print de 390px (hero de 616px): a foto desenhada tem
-   130,8% da largura da tela, ou seja 510px — o letreiro cai entre 183px e
-   282px, bem abaixo da barra de 64px. O texto começa por volta de 336px. A
-   rampa do véu morre em 62%, que é logo abaixo do letreiro.
-   **Mexeu no `158vw` ou no tamanho do h1, refaz essa conta com print novo.** */
+   ⚠️⚠️ O `160vw` É A TRAVA QUE PROTEGE O LETREIRO. Com `cover`, quanto mais
+   alto o hero, mais a imagem é ampliada pra cobrir a altura — e mais largura
+   ela perde nas laterais. O quadro é 540x891, então 891/540 = 1,65: enquanto o
+   hero for mais BAIXO que 165% da largura, `cover` corta pela ALTURA (que aqui
+   só come rua) e o letreiro nunca perde as pontas. O `160vw` guarda 3% disso.
+   **Trocou a foto ou mudou a altura: refaz a conta e confere com print a 390px.**
+
+   As contas, medidas em print de 390px (hero de 624px): o letreiro cai entre
+   227px e 296px do alto — bem abaixo da barra de 64px — e o texto começa por
+   volta de 404px. Por isso a rampa do véu é forte até 36% (contado de baixo) e
+   morre em 56%, logo abaixo do letreiro: na borda de baixo dele ela já vale
+   0,03. **Mexeu no `160vw` ou no tamanho do h1, refaz essa conta com print novo.** */
 @media (max-width:700px){
   .hero{
     min-height:calc(100vh - 3.2rem);
-    min-height:min(calc(100svh - 3.2rem),158vw);
+    min-height:min(calc(100svh - 3.2rem),160vw);
     padding:calc(var(--topo-h) + 1.2rem) 0 clamp(1.6rem,5vw,2.2rem);
     background-image:
       linear-gradient(0deg,
-        rgba(18,53,40,.96) 0%, rgba(18,53,40,.92) 12%, rgba(18,53,40,.84) 22%,
-        rgba(18,53,40,.70) 32%, rgba(18,53,40,.50) 42%, rgba(18,53,40,.28) 52%,
-        rgba(18,53,40,.10) 60%, rgba(18,53,40,0) 68%),
+        rgba(18,53,40,.96) 0%, rgba(18,53,40,.92) 11%, rgba(18,53,40,.84) 20%,
+        rgba(18,53,40,.72) 28%, rgba(18,53,40,.56) 36%, rgba(18,53,40,.34) 44%,
+        rgba(18,53,40,.14) 50%, rgba(18,53,40,0) 56%),
       url("assets/img/fachada-topo-mobile.webp"),
-      linear-gradient(180deg,#3A6B55 0%,#24503E 34%,#123528 62%,#0E2A20 100%);
-    background-size:cover,100% auto,cover;
+      linear-gradient(160deg,#2F7A5D 0%,#1E5C46 45%,#123528 100%);
+    background-size:cover,cover,cover;
     background-position:center,center top,center;
   }
   /* O SELO DE ENDEREÇO SAI NO CELULAR: ele encostava na linha "Paulo Coelho ·
@@ -389,6 +409,10 @@ h3{font-size:1.22rem}
   .hero__local{display:none}
   .hero h1{max-width:none;font-size:clamp(1.75rem,7.4vw,2.5rem)}
   .hero__sub{font-size:1rem;margin-top:1.1rem}
+  /* Os nomes saem da chamada no celular e ficam só no desktop: cada linha aqui
+     empurra o texto pra cima do letreiro, e os dois nomes já estão escritos na
+     barra do topo, que fica visível o tempo todo, e na seção "Equipe". */
+  .hero__nomes{display:none}
   /* ⚠️ O `.hero ` NA FRENTE É OBRIGATÓRIO. Na Realce a classe `.hero__acoes` foi
      reusada em outras seções e estas regras sem escopo esticaram a coluna do
      grid delas — com `nowrap`, item de flex não encolhe abaixo do próprio
@@ -1085,8 +1109,8 @@ h3{font-size:1.22rem}
     </span>
     <h1>Seu sorriso saudável, com o carinho que você merece.</h1>
     <p class="hero__sub">
-      Dr. Paulo Coelho e Dra. Mariana Caldas — periodontia, implantes,
-      ortodontia e harmonização orofacial, em Itabira.
+      <b class="hero__nomes">Dr. Paulo Coelho e Dra. Mariana Caldas</b>
+      Periodontia, implantes, ortodontia e harmonização orofacial, em Itabira.
     </p>
     <div class="hero__acoes">
       <a class="btn btn--claro" href="https://wa.me/553138340002?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o." target="_blank" rel="noopener">
