@@ -352,51 +352,53 @@ h3{font-size:1.22rem}
    ⚠️ ESTE BLOCO TEM QUE FICAR DEPOIS DE TODAS AS REGRAS BASE DO .hero — mesma
    especificidade, e quem vem depois ganha.
 
-   ============ A FOTO ABERTA RESOLVEU O CELULAR ============
-   ⚠️ HOUVE UMA VERSÃO COM `background-size:100% auto` AQUI, e ela foi
-   reprovada pelo usuário em 27/08/2026, nestas palavras: *"no mobile, a imagem
-   no topo da página ficou muito ruim e aquele letreiro embaixo ficou muito
-   espesso e não combinou"*.
+   ============ TRÊS TENTATIVAS ATÉ FECHAR, E O QUE CADA UMA ENSINOU ============
+   Tudo em 27/08/2026, com duas imagens de fachada geradas por IA que o usuário
+   trouxe: uma de plano fechado (`15_15_37`) e uma de plano aberto (`15_58_58`).
 
-   O que tinha acontecido: a primeira imagem era um plano FECHADO da fachada
-   (horizontal), e num quadro de retrato ela não dava altura pro texto sem o
-   letreiro ser cortado nas pontas. A saída da época foi desenhar a foto com
-   `100% auto` e deixar o resto do hero no degradê verde. Funcionava na teoria,
-   mas na tela virava um bloco verde chapado ocupando quase metade do topo — e
-   ele emendava com a faixa de credenciais, que também é verde-escuro. As duas
-   coisas juntas liam como uma barra grossa só, sem foto. Era isso o "espesso".
+   1. **Plano fechado com `background-size:100% auto`.** Reprovado: *"no mobile,
+      a imagem no topo da página ficou muito ruim e aquele letreiro embaixo
+      ficou muito espesso e não combinou"*. A foto era desenhada só na largura
+      da tela e o resto do hero ficava em degradê verde — virava um bloco
+      chapado que emendava com a faixa de credenciais, que também é verde.
+   2. **Plano aberto com `cover`.** Funcionou de layout, mas caiu por outro
+      motivo: naquela imagem a **placa lateral saiu destruída** — o infinito
+      virou um nó, "Paulo Coelho" virou "Paulo Cuolho", os telefones
+      embaralhados. *"no pc dá pra ver claramente e isso pode ser um ponto
+      negativo"*. Descartada.
+   3. **Plano fechado com `cover` e o recorte certo** — o que está aqui.
 
-   A correção não foi de CSS: **foi foto**. O usuário trouxe um plano ABERTO da
-   fachada, e nele o letreiro ocupa uma fatia menor da largura — o que permite
-   um recorte de retrato de verdade (540x891, `crop=540:891:520:180`), com o
-   letreiro em 66% da largura, calçada e rua embaixo pro texto morar, e prédio e
-   céu em cima pra barra. Com isso a foto voltou a ser `cover` e cobre o hero
-   inteiro. **A lição, que já tinha aparecido na Realce: quando o topo mobile
-   não fecha, a pergunta certa não é "que gradiente resolve" — é "essa foto tem
-   área vazia?".**
+   ⚠️ POR QUE A TENTATIVA 1 FALHOU, E NÃO ERA CULPA DA FOTO: eu tinha medido o
+   letreiro no arquivo errado. O `System.Drawing` do PowerShell devolve o
+   tamanho ajustado por DPI (1448x1086); **o tamanho real em pixels é 1408x1085**,
+   e é o `ffprobe` que diz a verdade. Com a medida errada o letreiro parecia
+   ocupar 50% da largura da foto, o que forçava um recorte largo demais pra ser
+   retrato. Medido certo, ele ocupa **584px de 1408 (41%)**, e cabe num quadro
+   de 620 de largura com 3% de folga de cada lado — retrato de verdade, sem
+   inventar chão nenhum. **Medir com ffprobe, não com System.Drawing.**
 
-   ⚠️⚠️ O `160vw` É A TRAVA QUE PROTEGE O LETREIRO. Com `cover`, quanto mais
-   alto o hero, mais a imagem é ampliada pra cobrir a altura — e mais largura
-   ela perde nas laterais. O quadro é 540x891, então 891/540 = 1,65: enquanto o
-   hero for mais BAIXO que 165% da largura, `cover` corta pela ALTURA (que aqui
-   só come rua) e o letreiro nunca perde as pontas. O `160vw` guarda 3% disso.
+   ⚠️⚠️ O `168vw` É A TRAVA QUE PROTEGE O LETREIRO. Com `cover`, quanto mais alto
+   o hero, mais a imagem é ampliada pra cobrir a altura — e mais largura ela
+   perde nas laterais. O quadro é 620x1085, então 1085/620 = 1,75: enquanto o
+   hero for mais BAIXO que 175% da largura, `cover` corta pela ALTURA (que aqui
+   só come rua) e o letreiro nunca perde as pontas. O `168vw` guarda 4% disso.
    **Trocou a foto ou mudou a altura: refaz a conta e confere com print a 390px.**
 
-   As contas, medidas em print de 390px (hero de 624px): o letreiro cai entre
-   227px e 296px do alto — bem abaixo da barra de 64px — e o texto começa por
-   volta de 404px. Por isso a rampa do véu é forte até 36% (contado de baixo) e
-   morre em 56%, logo abaixo do letreiro: na borda de baixo dele ela já vale
-   0,03. **Mexeu no `160vw` ou no tamanho do h1, refaz essa conta com print novo.** */
+   As contas, medidas em print de 390px (hero de 655px): o letreiro cai entre
+   252px e 355px do alto — bem abaixo da barra de 64px — e o texto começa por
+   volta de 435px. Por isso a rampa do véu é forte até 34% (contado de baixo) e
+   morre em 50%, logo abaixo do letreiro: na borda de baixo dele ela já vale
+   0,02. **Mexeu no `168vw` ou no tamanho do h1, refaz essa conta com print novo.** */
 @media (max-width:700px){
   .hero{
     min-height:calc(100vh - 3.2rem);
-    min-height:min(calc(100svh - 3.2rem),160vw);
+    min-height:min(calc(100svh - 3.2rem),168vw);
     padding:calc(var(--topo-h) + 1.2rem) 0 clamp(1.6rem,5vw,2.2rem);
     background-image:
       linear-gradient(0deg,
-        rgba(18,53,40,.96) 0%, rgba(18,53,40,.92) 11%, rgba(18,53,40,.84) 20%,
-        rgba(18,53,40,.72) 28%, rgba(18,53,40,.56) 36%, rgba(18,53,40,.34) 44%,
-        rgba(18,53,40,.14) 50%, rgba(18,53,40,0) 56%),
+        rgba(18,53,40,.96) 0%, rgba(18,53,40,.93) 10%, rgba(18,53,40,.87) 18%,
+        rgba(18,53,40,.78) 26%, rgba(18,53,40,.64) 34%, rgba(18,53,40,.42) 40%,
+        rgba(18,53,40,.18) 45%, rgba(18,53,40,0) 50%),
       url("assets/img/fachada-topo-mobile.webp"),
       linear-gradient(160deg,#2F7A5D 0%,#1E5C46 45%,#123528 100%);
     background-size:cover,cover,cover;

@@ -5,8 +5,8 @@ Convertidas em 15/08/2026 com ffmpeg, a partir dos originais em
 
 | Arquivo | Origem | Corte / tratamento |
 |---|---|---|
-| `fachada-topo.webp` 1100×921 | `ChatGPT Image 27 de ago. de 2026, 15_58_58.png` | `crop=1100:921:150:150`. Hero no desktop, e também o card da seção "O consultório" |
-| `fachada-topo-mobile.webp` 540×891 | a mesma imagem | `crop=540:891:520:180` — recorte de retrato centrado no letreiro, que a 540 de largura ocupa 66% do quadro. Calçada e rua embaixo (onde o texto mora), prédio e céu em cima (onde a barra fica) |
+| `fachada-topo.webp` 1230×915 | `ChatGPT Image 27 de ago. de 2026, 15_15_37.png` | `crop=1230:915:0:170`. Hero no desktop, e também o card da seção "O consultório". O corte em 1230 tira a placa lateral do quadro |
+| `fachada-topo-mobile.webp` 620×1085 | a mesma imagem | `crop=620:1085:510:0` — recorte de retrato centrado no letreiro, que a 620 de largura ocupa 94% do quadro com 3% de folga de cada lado. Calçada e rua embaixo (onde o texto mora), prédio e céu em cima (onde a barra fica) |
 | `atendimento.webp` 1400×854 | `ScreenShot_20260815182317.png` | **`crop=1263:770:0:0` — corta a paciente inteira fora do quadro.** Ver a regra abaixo |
 | `dupla.webp` 500×500 | `fdafafadme.png` | sem corte |
 | `dra-mariana.webp` 800×1000 | `ScreenShot_20260815173303.png` | `crop=608:760:120:0` pra 4:5 |
@@ -42,33 +42,41 @@ não vai. Não reintroduzir "porque ela mesma já postou".
    Antes de publicar de verdade, confirmar com a Mariana se o uso em site está
    liberado.
 
-## A imagem do topo é gerada por IA — duas coisas a saber
+## As imagens do topo são geradas por IA — o que aprendemos com elas
 
-O usuário trouxe duas em 27/08/2026, ambas reconstruções da fachada real com
-qualidade bem melhor que o print que estava no ar:
+O usuário trouxe duas em 27/08/2026, ambas reconstruções da fachada real, com
+qualidade bem melhor que o print que estava no ar. **A que ficou é a
+`15_15_37`** (plano fechado). As duas substituíram `fachada.webp` e
+`fachada-mobile.webp`, que foram pra `Fotos e Imagens/fachada-antiga/`.
 
-1. `ChatGPT Image 27 de ago. de 2026, 15_15_37.png` — plano **fechado**. Usada
-   por algumas horas e descartada: num quadro de retrato ela não dava altura
-   pro texto sem cortar o letreiro nas pontas, e a saída de emergência (desenhar
-   a foto com `100% auto` e completar o resto do hero com degradê verde) virou
-   um bloco verde chapado no celular. Reprovada pelo usuário.
-2. `ChatGPT Image 27 de ago. de 2026, 15_58_58.png` — plano **aberto**, a que
-   está em uso. Nela o letreiro ocupa uma fatia menor da largura, o que permite
-   um recorte de retrato de verdade, com foto de cima a baixo do hero.
+**Por que a `15_58_58` (plano aberto) foi descartada.** Ela chegou a ficar no ar
+por uma hora e resolvia bem o enquadramento, mas **a placa lateral saiu
+destruída**: o infinito virou um nó, "Paulo Coelho" virou "Paulo Cuolho",
+"Mariana Caldas" virou "Marleno Cotlas", os registros viraram rabisco e os dois
+telefones ficaram embaralhados. Palavras do usuário: *"a placa está muito ruim e
+bugada, no pc dá pra ver claramente e isso pode ser um ponto negativo"*. Ela
+segue em `Fotos e Imagens/` caso um dia sirva pra outra coisa — **não usar em
+nada onde a placa apareça.**
 
-As duas substituíram `fachada.webp` e `fachada-mobile.webp`, que foram pra
-`Fotos e Imagens/fachada-antiga/`.
+**Na `15_15_37` a placa está limpa e correta** — lê-se "ODONTOLOGIA / Paulo
+Coelho CRO 26573 / Mariana Caldas CRO 26572", que bate com o que o usuário
+conferiu no site do conselho. Mesmo assim ela fica **fora do quadro** no recorte
+do desktop (o corte para em 1230 e ela começa em 1245): no tamanho em que
+apareceria no hero ela é ilegível, e placa ilegível no canto é ruído, não
+credencial. O registro dos dois já está escrito no rodapé, que é onde o Código
+de Ética Odontológica exige.
 
-**Sobre os registros de conselho na placa lateral.** A imagem gerada reconstruiu
-a plaquinha do canto direito com os números legíveis, e eles pareciam invenção
-da IA (na foto original estão ilegíveis). Chegaram a ser cortados fora do
-quadro. **O usuário conferiu no site do conselho e confirmou que estão certos:
-Dr. Paulo Coelho 26573 e Dra. Mariana Caldas 26572.** A placa voltou pro quadro.
+⚠️ **A regra que sobrevive a tudo isso: texto dentro de imagem gerada por IA é
+suspeito até ser conferido na fonte.** Duas imagens do mesmo prompt, no mesmo
+dia, e uma delas escreveu o nome do dentista errado.
 
-⚠️ A regra que sobrevive disso continua valendo pra qualquer imagem gerada:
-**texto dentro de imagem de IA é suspeito até ser conferido na fonte.** Aqui a
-fonte confirmou — mas o passo de conferir não pode ser pulado, ainda mais em
-site de dentista, onde registro de conselho é assunto de CRO.
+⚠️ **MEDIR COM `ffprobe`, NÃO COM `System.Drawing`.** O `[System.Drawing.Image]`
+do PowerShell devolve o tamanho ajustado por DPI — pra `15_15_37` ele diz
+1448×1086, e o tamanho real em pixels é **1408×1085**. Uma rodada inteira de
+recorte foi perdida por causa disso: com a medida errada o letreiro parecia
+ocupar 50% da largura, o que tornava impossível um recorte de retrato; medido
+certo ele ocupa 41%, e o retrato sai sem esforço. `ffprobe -v error
+-show_entries stream=width,height -of csv=p=0 <arquivo>`.
 
 ## Se aparecerem originais melhores
 
