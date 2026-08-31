@@ -240,31 +240,42 @@ h3{font-size:1.22rem}
       padding-top. E `100svh`, não `100vh`: no celular o vh conta a barra de
       endereço que ainda vai sumir, e os botões nasceriam abaixo da dobra.
 
-   3. A FOTO É OUTRA: `fachada-topo.webp`, gerada em 27/08/2026 da segunda
-      imagem que o usuário trouxe — um plano ABERTO da fachada, que substituiu
-      tanto a `fachada.webp` antiga quanto o plano fechado da manhã do mesmo
-      dia. O motivo do plano aberto está no bloco de celular, mais abaixo.
+   3. **A FOTO É REAL, não gerada por IA — trocada em 31/08/2026.** As duas
+      fachadas geradas em 27/08/2026 (a de plano aberto que ficou no ar, e a de
+      plano fechado descartada por causa da placa bugada) saíram; o usuário
+      mandou a fachada de verdade (`Fotos e Imagens/caldas coelho fachada.png`,
+      1469×1071) e as duas geradas foram pra `fachada-antiga/`. Isso encerra a
+      preocupação de placa com texto errado — é a fachada de verdade, o que tá
+      escrito nela é o que tá na parede.
 
-   ⚠️ A PLACA LATERAL FICA NO QUADRO, e vale registrar por quê. Num primeiro
-   momento ela foi cortada fora: a imagem é gerada por IA, e os registros de
-   conselho que aparecem nela pareciam invenção. **O usuário conferiu no site
-   do conselho e confirmou: os números estão certos** — Dr. Paulo Coelho
-   **26573** e Dra. Mariana Caldas **26572**. A placa voltou.
-   A regra que sobrevive disso, e essa continua valendo: **texto dentro de
-   imagem gerada por IA é suspeito até ser conferido na fonte** — só que aqui
-   a fonte confirmou, então não há o que esconder.
+   ⚠️ O CROP DO DESKTOP É UM "BANNER" BEM BAIXO DE PROPÓSITO — `crop=1469:630:0:360`
+   (de um total de 1071 de altura), não é só "cortar o excesso". Numa primeira
+   tentativa a foto foi usada inteira (1469×1071, razão 1,37 — quase quadrada
+   perto da tela) e o `cover` numa janela normal de desktop mal cortava a
+   vertical: o letreiro sobrava bem no meio do quadro, exatamente onde o h1
+   nasce, e o print mostrou "ODONTOLOGIA" com o "carinho que você merece"
+   escrito em cima. Cortando a franja de cima (prédio de tijolo e sarrafo, que
+   não faz falta) a foto vira uma faixa bem mais larga que alta (razão 2,33) —
+   larga o bastante pra qualquer janela de desktop real ser MAIS estreita que
+   ela, então o `cover` passa a cortar as LATERAIS (mantém o letreiro centrado)
+   em vez da vertical (que era o que empurrava o letreiro pro meio do quadro).
+   A altura de 630 (em vez de 700) veio de um segundo ajuste, pedido pelo
+   usuário com uma foto anotada: *"tente focar um pouco menos na rua. Só um
+   pouco mesmo"* — a franja de asfalto na base ficou um pouco mais curta. Com
+   esse corte o letreiro cai a ~11%–33% da altura da foto, e o resto — calçada
+   e um pouco de rua — sobra pro texto morar sem disputar espaço com a
+   placa. **Trocou a foto: confere com print de desktop se o h1 não nasce em
+   cima do letreiro antes de subir.**
 
    ⚠️ ESTA FACHADA É CLARA — mármore branco, céu azul, calçada bege ao sol. É a
    diferença mais importante em relação à Realce (parede bege, tom médio) e à
    GeP (foto noturna). Todas as opacidades aqui são mais fortes que as de lá.
    Se um dia a foto trocar por uma mais escura, elas podem afrouxar.
 
-   O `background-position` vertical é `center 60%`: o letreiro vive na metade
-   de cima do recorte, e ancorar mais pro fim empurra ele pra cima do quadro —
-   é o que abre a metade de baixo (calçada e rua) pro texto morar sem cair em
-   cima da escrita da placa. **Foi exatamente esse o erro da primeira
-   tentativa**, e o print mostrou na hora: o h1 nascia por cima de
-   "ODONTOLOGIA". */
+   O `background-position` é `center 60%`: como o corte já é bem mais largo que
+   a tela, isso pesa pouco (o `cover` já corta pela lateral, não pela altura),
+   mas mantém alguma folga se a janela for baixa o bastante pra ainda cortar
+   verticalmente. */
 
 .hero{
   position:relative;
@@ -352,43 +363,36 @@ h3{font-size:1.22rem}
    ⚠️ ESTE BLOCO TEM QUE FICAR DEPOIS DE TODAS AS REGRAS BASE DO .hero — mesma
    especificidade, e quem vem depois ganha.
 
-   ============ TRÊS TENTATIVAS ATÉ FECHAR, E O QUE CADA UMA ENSINOU ============
-   Tudo em 27/08/2026, com duas imagens de fachada geradas por IA que o usuário
-   trouxe: uma de plano fechado (`15_15_37`) e uma de plano aberto (`15_58_58`).
+   **Foto trocada em 31/08/2026** pela fachada real (ver o bloco grande lá em
+   cima, no `.hero` base). O recorte mobile é `crop=615:1071:560:0` — largura
+   inteira do letreiro mais folga, ALTURA INTEIRA da foto (1071), tirado do
+   mesmo padrão que já funcionava aqui: fatia vertical estreita de uma foto
+   paisagem, centrada no letreiro, em vez de zerar a foto e reconstruir com IA.
 
-   1. **Plano fechado com `background-size:100% auto`.** Reprovado: *"no mobile,
-      a imagem no topo da página ficou muito ruim e aquele letreiro embaixo
-      ficou muito espesso e não combinou"*. A foto era desenhada só na largura
-      da tela e o resto do hero ficava em degradê verde — virava um bloco
-      chapado que emendava com a faixa de credenciais, que também é verde.
-   2. **Plano aberto com `cover`.** Funcionou de layout, mas caiu por outro
-      motivo: naquela imagem a **placa lateral saiu destruída** — o infinito
-      virou um nó, "Paulo Coelho" virou "Paulo Cuolho", os telefones
-      embaralhados. *"no pc dá pra ver claramente e isso pode ser um ponto
-      negativo"*. Descartada.
-   3. **Plano fechado com `cover` e o recorte certo** — o que está aqui.
+   A diferença pro recorte antigo (que era de uma fachada gerada por IA, 41% de
+   letreiro numa faixa de 620px com só 3% de folga de cada lado — quase
+   colado na borda) é que aqui sobrou mais pano: o letreiro ocupa uma fração
+   bem menor da largura de 615px, então a composição respira — dá pra ver o
+   pouco de parede de mármore e a placa pequena do lado sem cortar em cima do
+   letreiro principal. **Foi exatamente essa folga que faltava e motivou a
+   troca** — a foto de 27/08 era estreita demais pra dar uma boa margem.
 
-   ⚠️ POR QUE A TENTATIVA 1 FALHOU, E NÃO ERA CULPA DA FOTO: eu tinha medido o
-   letreiro no arquivo errado. O `System.Drawing` do PowerShell devolve o
-   tamanho ajustado por DPI (1448x1086); **o tamanho real em pixels é 1408x1085**,
-   e é o `ffprobe` que diz a verdade. Com a medida errada o letreiro parecia
-   ocupar 50% da largura da foto, o que forçava um recorte largo demais pra ser
-   retrato. Medido certo, ele ocupa **584px de 1408 (41%)**, e cabe num quadro
-   de 620 de largura com 3% de folga de cada lado — retrato de verdade, sem
-   inventar chão nenhum. **Medir com ffprobe, não com System.Drawing.**
+   ⚠️ MEDIR COM `ffprobe`, NÃO COM `System.Drawing` — o `[System.Drawing.Image]`
+   do PowerShell devolve o tamanho ajustado por DPI, que já causou um recorte
+   errado aqui no passado. `ffprobe -v error -show_entries stream=width,height
+   -of csv=p=0 <arquivo>` sempre.
 
    ⚠️⚠️ O `168vw` É A TRAVA QUE PROTEGE O LETREIRO. Com `cover`, quanto mais alto
    o hero, mais a imagem é ampliada pra cobrir a altura — e mais largura ela
-   perde nas laterais. O quadro é 620x1085, então 1085/620 = 1,75: enquanto o
-   hero for mais BAIXO que 175% da largura, `cover` corta pela ALTURA (que aqui
-   só come rua) e o letreiro nunca perde as pontas. O `168vw` guarda 4% disso.
-   **Trocou a foto ou mudou a altura: refaz a conta e confere com print a 390px.**
+   perde nas laterais. O quadro agora é 615×1071, então 1071/615 ≈ 1,74 —
+   praticamente o mesmo do recorte anterior (1,75), por isso o valor de 168vw
+   não precisou mudar na troca de 31/08. Enquanto o hero for mais BAIXO que
+   ~174% da largura, `cover` corta pela ALTURA (que aqui só come rua) e o
+   letreiro nunca perde as pontas. **Trocou a foto ou mudou a altura: refaz a
+   conta (altura/largura do novo recorte × ~0,96) e confere com print a 390px.**
 
-   As contas, medidas em print de 390px (hero de 655px): o letreiro cai entre
-   252px e 355px do alto — bem abaixo da barra de 64px — e o texto começa por
-   volta de 435px. Por isso a rampa do véu é forte até 34% (contado de baixo) e
-   morre em 50%, logo abaixo do letreiro: na borda de baixo dele ela já vale
-   0,02. **Mexeu no `168vw` ou no tamanho do h1, refaz essa conta com print novo.** */
+   Testado com o print de 390px depois da troca: letreiro inteiro, com folga
+   dos dois lados, texto do h1 nascendo abaixo dele sem sobrepor nada. */
 @media (max-width:700px){
   .hero{
     min-height:calc(100vh - 3.2rem);
@@ -666,30 +670,100 @@ h3{font-size:1.22rem}
 .comod{display:flex;gap:.65rem;align-items:flex-start;font-size:.93rem;color:var(--texto-suave)}
 .comod svg{width:18px;height:18px;flex:none;margin-top:.24rem;fill:var(--verde-claro)}
 
-/* ====================== avaliações do google ====================== */
-.notaz{
-  display:flex;flex-wrap:wrap;align-items:center;gap:.9rem 1.6rem;
-  margin-bottom:clamp(2rem,4vw,2.6rem);
-}
-.notaz__num{
-  font-family:Georgia,serif;font-size:3.2rem;line-height:1;color:var(--verde-esc);
-}
-.notaz__estrelas{display:flex;gap:.15rem}
-.notaz__estrelas svg{width:20px;height:20px;fill:#E8A33D}
-.notaz__txt{font-size:.92rem;color:var(--texto-suave)}
-.notaz__txt b{display:block;color:var(--texto);font-weight:600}
+/* ====================== avaliações do google ======================
+   Modelo trazido da Realce Odontologia em 31/08/2026 (mesmo componente já
+   usado no Contabiliza e na WF Contabilidade): placar que conta até a nota
+   real quando a seção entra na tela, e carrossel de depoimentos — um por vez,
+   girando sozinho — em vez da parede de 4 cards fixos que estava aqui antes.
 
-.avals{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
-.aval{
-  padding:1.5rem 1.5rem 1.3rem;border-radius:var(--raio);
+   ⚠️ NOME DO PACIENTE: só primeiro nome + inicial do sobrenome, de propósito.
+   Achado na auditoria do CFO feita no site da Realce em 31/08/2026: o Art. 44,
+   VI do Código de Ética veda citar nome que identifique o paciente "para fins
+   de autopromoção" — e uma seção de avaliações no site é exatamente isso,
+   mesmo com o nome vindo de review pública do Google. Nome completo (o que
+   estava aqui e ainda está no ar na Realce, sem essa correção) é o risco
+   maior; "Lucas V." mantém a prova social sem identificar ninguém. */
+.placar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:1.2rem 2.4rem;
+  padding:1.6rem 1.8rem;margin-bottom:2rem;
   background:var(--papel);border:1px solid var(--borda);
-  display:flex;flex-direction:column;
+  border-radius:var(--raio);box-shadow:var(--sombra);
 }
-.aval__estrelas{display:flex;gap:.1rem;margin-bottom:.85rem}
-.aval__estrelas svg{width:15px;height:15px;fill:#E8A33D}
-.aval p{font-size:.96rem;line-height:1.6;color:var(--texto);margin:0 0 1.1rem}
-.aval footer{margin-top:auto;font-size:.84rem;color:var(--texto-suave)}
-.aval footer b{display:block;color:var(--verde-esc);font-weight:600;font-size:.9rem}
+.placar__nota{
+  font-family:Georgia,serif;font-size:clamp(2.8rem,7vw,3.6rem);
+  line-height:1;color:var(--verde-esc);font-variant-numeric:tabular-nums;
+}
+.placar__contagem{display:block;color:var(--texto-suave);font-size:.92rem;margin-top:.35rem}
+.placar__contagem b{color:var(--verde-esc);font-variant-numeric:tabular-nums}
+.placar__fonte{margin-left:auto;font-size:.82rem;color:var(--texto-suave)}
+
+/* As estrelas são duas camadas do mesmo glifo: a de baixo apagada, a de cima
+   dourada e recortada por largura. Animar essa largura de 0 até o alvo
+   "preenche" as estrelas — pra 4,8 ela para pertinho da quinta cheia. Sem
+   imagem, sem SVG, sem biblioteca. */
+.estrelas-med{position:relative;display:inline-block;line-height:1;font-size:1.25rem;letter-spacing:.12em}
+.estrelas-med span{display:block;white-space:nowrap}
+.estrelas-med .vazias{color:var(--areia)}
+.estrelas-med .cheias{position:absolute;left:0;top:0;overflow:hidden;color:#E8A33D;width:96%}
+.js .estrelas-med .cheias{width:0;transition:width 1.5s cubic-bezier(.16,1,.3,1) .15s}
+.js .estrelas-med.contou .cheias{width:96%}
+
+/* Sem JS o carrossel não existe: os depoimentos ficam empilhados e todos
+   legíveis. O JS é que troca o layout pra trilho deslizante. */
+.avals{display:grid;gap:1.1rem}
+.aval{
+  background:var(--papel);border:1px solid var(--borda);
+  border-radius:var(--raio);padding:1.7rem 1.6rem;
+  display:flex;flex-direction:column;gap:.9rem;
+}
+.aval__estrelas{color:#E8A33D;letter-spacing:.12em}
+.aval blockquote{margin:0;color:var(--texto);font-size:1.02rem;line-height:1.6}
+.aval__quem{margin-top:auto;display:flex;align-items:center;gap:.8rem}
+.aval__ini{
+  width:44px;height:44px;border-radius:50%;flex:none;
+  background:var(--salvia-clara);color:var(--verde-esc);
+  display:grid;place-items:center;
+  font-weight:700;font-size:.9rem;letter-spacing:.03em;
+}
+.aval__quem b{display:block;font-weight:600;color:var(--verde-esc);font-size:.95rem}
+.aval__quem .fonte{display:block;font-size:.79rem;color:var(--texto-suave)}
+
+.carrossel__janela{overflow:hidden}
+.carrossel--on .avals{
+  display:flex;gap:0;
+  transition:transform .7s cubic-bezier(.22,1,.36,1);
+  will-change:transform;
+}
+.carrossel--on .carrossel__janela{max-width:780px;margin-inline:auto}
+.carrossel--on .aval{flex:0 0 100%;min-width:100%;align-self:stretch}
+.carrossel--on .aval{opacity:.15;transition:opacity .7s ease}
+.carrossel--on .aval[aria-hidden="false"]{opacity:1}
+
+.carrossel__controles{display:none;align-items:center;justify-content:center;gap:1rem;margin-top:1.6rem}
+.carrossel--on .carrossel__controles{display:flex}
+.seta{
+  width:48px;height:48px;border-radius:50%;flex:none;
+  background:var(--papel);border:1px solid var(--borda);color:var(--verde-esc);
+  display:grid;place-items:center;cursor:pointer;
+  font-size:1.1rem;line-height:1;
+  transition:border-color .18s,background .18s,transform .18s;
+}
+.seta:hover{border-color:var(--verde);color:var(--verde);transform:translateY(-1px)}
+.seta:focus-visible{outline:2px solid var(--verde);outline-offset:2px}
+.pontos{display:flex;align-items:center;gap:.45rem}
+/* O ponto continua com 8px de bolinha, mas o botão inteiro tem 48px de alvo:
+   o desenho vive no ::after e o <button> vira só a área de toque, transparente.
+   Sem isso o alvo de toque reprova no PageSpeed e o dedo erra o ponto no
+   celular. */
+.ponto{position:relative;width:22px;height:48px;padding:0;border:0;background:none;cursor:pointer;transition:width .3s cubic-bezier(.22,1,.36,1)}
+.ponto::after{
+  content:"";position:absolute;inset:50% 0 auto 0;transform:translateY(-50%);
+  height:8px;border-radius:999px;background:var(--areia);
+  transition:background .3s;
+}
+.ponto[aria-current="true"]{width:40px}
+.ponto[aria-current="true"]::after{background:var(--verde)}
+.ponto:focus-visible{outline:2px solid var(--verde);outline-offset:3px;border-radius:8px}
 
 /* ====================== faq ====================== */
 .faq{display:grid;gap:.7rem}
@@ -1402,12 +1476,11 @@ h3{font-size:1.22rem}
         estacionamento, todos preparados para quem usa cadeira de rodas.
       </p>
       <div class="comodidades">
-        <div class="comod"><svg aria-hidden="true"><use href="#i-cadeira"/></svg><span>Entrada acessível para cadeira de rodas</span></div>
-        <div class="comod"><svg aria-hidden="true"><use href="#i-cadeira"/></svg><span>Banheiro acessível</span></div>
-        <div class="comod"><svg aria-hidden="true"><use href="#i-cadeira"/></svg><span>Estacionamento acessível</span></div>
+        <div class="comod"><svg aria-hidden="true"><use href="#i-cadeira"/></svg><span>Entrada, banheiro e estacionamento acessíveis para cadeira de rodas</span></div>
         <div class="comod"><svg aria-hidden="true"><use href="#i-relogio"/></svg><span>Horário combinado pelo WhatsApp</span></div>
         <div class="comod"><svg aria-hidden="true"><use href="#i-cartao"/></svg><span>Cartão de crédito e débito</span></div>
         <div class="comod"><svg aria-hidden="true"><use href="#i-cartao"/></svg><span>Pagamento por aproximação</span></div>
+        <div class="comod"><svg aria-hidden="true"><use href="#i-cartao"/></svg><span>Pagamento por Pix</span></div>
       </div>
       <a class="btn" style="margin-top:2rem" href="https://wa.me/553138340002?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o." target="_blank" rel="noopener">
         <svg class="btn__ico" aria-hidden="true"><use href="#i-zap"/></svg>
@@ -1425,49 +1498,69 @@ h3{font-size:1.22rem}
       <h2>O que os pacientes escreveram no Google</h2>
     </div>
 
-    <div class="notaz">
-      <span class="notaz__num">4,8</span>
-      <span class="notaz__estrelas" aria-hidden="true">
-        <svg><use href="#i-estrela"/></svg><svg><use href="#i-estrela"/></svg><svg><use href="#i-estrela"/></svg><svg><use href="#i-estrela"/></svg><svg><use href="#i-estrela"/></svg>
-      </span>
-      <span class="notaz__txt">
-        <b>Nota no Google</b>
-        <a href="https://maps.app.goo.gl/538YDozLyqymjekEA" target="_blank" rel="noopener" style="color:var(--verde)">Ver a ficha completa</a>
-      </span>
+    <!-- Placar: número e estrelas sobem do zero quando a seção entra na tela.
+         O valor final mora no data-alvo e também escrito no HTML — sem JS a
+         nota já aparece pronta. -->
+    <div class="placar" data-placar>
+      <div class="placar__nota" data-conta data-alvo="4.8" data-casas="1">4,8</div>
+      <div>
+        <span class="estrelas-med" data-estrelas aria-hidden="true">
+          <span class="vazias">★★★★★</span>
+          <span class="cheias">★★★★★</span>
+        </span>
+        <span class="placar__contagem">Média de <b data-conta data-alvo="6">6</b> avaliações de pacientes no Google</span>
+      </div>
+      <span class="placar__fonte"><a href="https://maps.app.goo.gl/538YDozLyqymjekEA" target="_blank" rel="noopener" style="color:inherit">Ver a ficha completa</a></span>
     </div>
 
-    <div class="avals">
-      <article class="aval">
-        <div class="aval__estrelas" aria-label="5 de 5 estrelas">
-          <svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg>
-        </div>
-        <p>“Dra. Mariana é uma excelente profissional. Muito atenciosa, pontual e com muito conhecimento e experiência na área. Recomendo 100%.”</p>
-        <footer><b>Lucas Viegas</b>no Google, há 2 anos</footer>
-      </article>
+    <div class="carrossel" data-carrossel>
+      <div class="carrossel__janela">
+        <div class="avals" data-trilho>
 
-      <article class="aval">
-        <div class="aval__estrelas" aria-label="5 de 5 estrelas">
-          <svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg>
-        </div>
-        <p>“Sou cliente de Paulo desde 2010 e seu trabalho é impecável. Já o recomendei a várias pessoas, que também gostaram muito!”</p>
-        <footer><b>Janine Procópio</b>Local Guide no Google, há 2 anos</footer>
-      </article>
+          <article class="aval">
+            <div class="aval__estrelas" aria-hidden="true">★★★★★</div>
+            <blockquote>“Dra. Mariana é uma excelente profissional. Muito atenciosa, pontual e com muito conhecimento e experiência na área. Recomendo 100%.”</blockquote>
+            <div class="aval__quem">
+              <span class="aval__ini" aria-hidden="true">L</span>
+              <div><b>Lucas V.</b><span class="fonte">Google, há 2 anos</span></div>
+            </div>
+          </article>
 
-      <article class="aval">
-        <div class="aval__estrelas" aria-label="5 de 5 estrelas">
-          <svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg>
-        </div>
-        <p>“A Dra. Mariana tem um atendimento diferenciado. Muito atenciosa e simpática.”</p>
-        <footer><b>Marcelio Leite</b>no Google, há 2 anos</footer>
-      </article>
+          <article class="aval">
+            <div class="aval__estrelas" aria-hidden="true">★★★★★</div>
+            <blockquote>“Sou cliente de Paulo desde 2010 e seu trabalho é impecável. Já o recomendei a várias pessoas, que também gostaram muito!”</blockquote>
+            <div class="aval__quem">
+              <span class="aval__ini" aria-hidden="true">J</span>
+              <div><b>Janine P.</b><span class="fonte">Google · Local Guide, há 2 anos</span></div>
+            </div>
+          </article>
 
-      <article class="aval">
-        <div class="aval__estrelas" aria-label="5 de 5 estrelas">
-          <svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg>
+          <article class="aval">
+            <div class="aval__estrelas" aria-hidden="true">★★★★★</div>
+            <blockquote>“A Dra. Mariana tem um atendimento diferenciado. Muito atenciosa e simpática.”</blockquote>
+            <div class="aval__quem">
+              <span class="aval__ini" aria-hidden="true">M</span>
+              <div><b>Marcelio L.</b><span class="fonte">Google, há 2 anos</span></div>
+            </div>
+          </article>
+
+          <article class="aval">
+            <div class="aval__estrelas" aria-hidden="true">★★★★★</div>
+            <blockquote>“Muito bom o consultório e os profissionais que lá trabalham.”</blockquote>
+            <div class="aval__quem">
+              <span class="aval__ini" aria-hidden="true">L</span>
+              <div><b>Leo M.</b><span class="fonte">Google · Local Guide, há 5 anos</span></div>
+            </div>
+          </article>
+
         </div>
-        <p>“Muito bom o consultório e os profissionais que lá trabalham.”</p>
-        <footer><b>Leo Martins</b>Local Guide no Google, há 5 anos</footer>
-      </article>
+      </div>
+
+      <div class="carrossel__controles">
+        <button class="seta" type="button" data-anterior aria-label="Depoimento anterior">‹</button>
+        <div class="pontos" data-pontos role="group" aria-label="Escolher depoimento"></div>
+        <button class="seta" type="button" data-proximo aria-label="Próximo depoimento">›</button>
+      </div>
     </div>
   </div>
 </section>
@@ -1891,6 +1984,115 @@ h3{font-size:1.22rem}
     });
   }, { threshold: 0.35 });
   obs.observe(leque);
+})();
+
+// Placar de avaliações: o 4,8 e o "6" sobem de zero quando a seção entra na
+// tela, e as estrelas se preenchem junto. Mesmo componente da Realce
+// Odontologia (e do Contabiliza/WF Contabilidade), adaptado à paleta daqui.
+// Sem JS os números já vêm prontos no HTML.
+(function () {
+  var semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var temObs = 'IntersectionObserver' in window;
+
+  function formata(v, casas) {
+    return casas ? v.toFixed(casas).replace('.', ',') : String(Math.round(v));
+  }
+  function conta(el) {
+    var alvo = parseFloat(el.getAttribute('data-alvo'));
+    var casas = parseInt(el.getAttribute('data-casas') || '0', 10);
+    if (semMovimento || !window.requestAnimationFrame) { el.textContent = formata(alvo, casas); return; }
+    var t0 = null, dur = 1500;
+    requestAnimationFrame(function passo(t) {
+      if (t0 === null) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3); // easeOutCubic: rápido e desacelera
+      el.textContent = formata(alvo * e, casas);
+      if (p < 1) requestAnimationFrame(passo);
+    });
+  }
+  var placar = document.querySelector('[data-placar]');
+  if (placar) {
+    var dispara = function () {
+      placar.querySelectorAll('[data-conta]').forEach(conta);
+      var est = placar.querySelector('[data-estrelas]');
+      if (est) est.classList.add('contou');
+    };
+    if (!temObs) { dispara(); }
+    else {
+      var obsP = new IntersectionObserver(function (is) {
+        is.forEach(function (i) { if (i.isIntersecting) { dispara(); obsP.disconnect(); } });
+      }, { threshold: 0.35 });
+      obsP.observe(placar);
+    }
+  }
+})();
+
+// Carrossel de depoimentos: um por vez, girando sozinho a cada 5s. Sem JS os
+// depoimentos ficam todos empilhados e legíveis (é o `.avals` sem
+// `carrossel--on`) — é o script que troca pro trilho deslizante.
+(function () {
+  var car = document.querySelector('[data-carrossel]');
+  if (!car) return;
+  var trilho = car.querySelector('[data-trilho]');
+  var slides = Array.prototype.slice.call(trilho.children);
+  if (slides.length < 2) return;
+
+  var semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  car.classList.add('carrossel--on');
+  var pontos = car.querySelector('[data-pontos]');
+  var atual = 0, timer = null, INTERVALO = 5000;
+
+  function ir(n) {
+    atual = (n + slides.length) % slides.length;
+    trilho.style.transform = 'translateX(' + (-atual * 100) + '%)';
+    Array.prototype.forEach.call(pontos.children, function (p, i) {
+      p.setAttribute('aria-current', i === atual ? 'true' : 'false');
+    });
+    // Esconde os inativos do leitor de tela: senão ele lê os quatro
+    // depoimentos seguidos, como se fossem um parágrafo só.
+    slides.forEach(function (s, i) { s.setAttribute('aria-hidden', i === atual ? 'false' : 'true'); });
+  }
+  function parar() { if (timer) { clearInterval(timer); timer = null; } }
+  function girar() { parar(); if (!semMovimento) timer = setInterval(function () { ir(atual + 1); }, INTERVALO); }
+
+  slides.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ponto';
+    b.setAttribute('aria-label', 'Depoimento ' + (i + 1) + ' de ' + slides.length);
+    b.addEventListener('click', function () { ir(i); girar(); });
+    pontos.appendChild(b);
+  });
+
+  car.querySelector('[data-anterior]').addEventListener('click', function () { ir(atual - 1); girar(); });
+  car.querySelector('[data-proximo]').addEventListener('click', function () { ir(atual + 1); girar(); });
+
+  // Parar só na faixa de controles, nunca no carrossel inteiro: a seção fica
+  // no meio da página, e quem rola de mouse deixa o cursor parado em cima
+  // dela — pausar tudo faria o giro nunca acontecer, e pareceria defeito.
+  var controles = car.querySelector('.carrossel__controles');
+  if (controles) {
+    controles.addEventListener('mouseenter', parar);
+    controles.addEventListener('mouseleave', girar);
+  }
+  car.addEventListener('focusin', parar);
+  car.addEventListener('focusout', girar);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) parar(); else girar();
+  });
+
+  var x0 = null;
+  car.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; parar(); }, { passive: true });
+  car.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) ir(atual + (dx < 0 ? 1 : -1));
+    x0 = null;
+    girar();
+  }, { passive: true });
+
+  ir(0);
+  girar();
 })();
 
 (function () {

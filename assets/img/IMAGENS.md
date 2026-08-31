@@ -42,7 +42,31 @@ não vai. Não reintroduzir "porque ela mesma já postou".
    Antes de publicar de verdade, confirmar com a Mariana se o uso em site está
    liberado.
 
+## O topo agora é a fachada real (31/08/2026)
+
+O usuário mandou a foto de verdade da fachada — `Fotos e Imagens/caldas coelho
+fachada.png`, 1469×1071 — e pediu pra trocar as duas imagens geradas por IA que
+estavam no ar desde 27/08. Motivo dele: *"a última imagem no mobile não ficou
+agradável [...] essa última está mais ampla e você poderá utilizar melhor"* —
+a foto de IA era estreita demais pra dar folga no recorte de celular.
+
+| Arquivo | Origem | Corte / tratamento |
+|---|---|---|
+| `fachada-topo.webp` 1469×630 | `caldas coelho fachada.png` | `crop=1469:630:0:360`. Corte bem baixo e largo (razão 2,33) de propósito: com a foto inteira (1,37) o `cover` numa janela normal de desktop mal cortava a vertical, e o letreiro sobrava no meio do quadro — bem em cima de onde o h1 nasce. Cortando a franja de prédio/tijolo de cima, o letreiro cai pra ~11%–33% da altura e o resto vira calçada/rua pro texto morar. Altura ajustada de 700 pra 630 a pedido do usuário, numa segunda rodada, pra mostrar um pouco menos de rua |
+| `fachada-topo-mobile.webp` 615×1071 | a mesma imagem | `crop=615:1071:560:0` — altura inteira, fatia vertical de largura centrada no letreiro. Mais folga que o recorte anterior (que era 94% letreiro, quase colado na borda): aqui sobra mármore e a placa pequena do lado sem apertar a composição |
+
+As duas fachadas geradas por IA (a de plano aberto que estava no ar, e a de
+plano fechado descartada por causa da placa bugada) foram pra
+`Fotos e Imagens/fachada-antiga/` como `fachada-topo-ia-27-08.webp` e
+`fachada-topo-mobile-ia-27-08.webp`. Isso encerra a ressalva de "texto gerado
+por IA é suspeito até conferir na fonte" pro hero — é foto de verdade agora, o
+que está escrito na placa é o que está na parede.
+
 ## As imagens do topo são geradas por IA — o que aprendemos com elas
+
+**Histórico — válido até 31/08/2026, quando as duas imagens abaixo foram
+substituídas pela foto real (seção acima). Mantido pela lição do `ffprobe`,
+que continua valendo pra qualquer imagem nova.**
 
 O usuário trouxe duas em 27/08/2026, ambas reconstruções da fachada real, com
 qualidade bem melhor que o print que estava no ar. **A que ficou é a
